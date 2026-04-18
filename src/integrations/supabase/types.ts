@@ -14,7 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      external_metrics_cache: {
+        Row: {
+          created_at: string
+          fetched_at: string
+          payload: Json
+          slug: string
+          source_url: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          fetched_at?: string
+          payload: Json
+          slug: string
+          source_url: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          fetched_at?: string
+          payload?: Json
+          slug?: string
+          source_url?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
