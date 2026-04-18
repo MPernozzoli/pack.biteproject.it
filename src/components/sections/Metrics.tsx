@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { instagramProfile, languages, metrics as fallbackMetrics, topCountries } from "@/data/site";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useReveal } from "@/hooks/use-reveal";
-import g1 from "@/assets/gallery-1.jpg";
-import g3 from "@/assets/gallery-3.jpg";
-import g5 from "@/assets/gallery-5.jpg";
-import g6 from "@/assets/gallery-6.jpg";
+import { supabase } from "@/integrations/supabase/client";
+import { duoPhotos, freyjaPhotos, godotPhotos } from "@/data/photos";
 
 const formatNumber = (n: number) => {
   if (n >= 1000) return `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}K`;
@@ -94,7 +92,12 @@ const BarRow = ({ label, value }: { label: string; value: number }) => (
   </div>
 );
 
-const topContent = [g6, g1, g3, g5];
+const topContent = [
+  duoPhotos.sunsetBoat,
+  godotPhotos.studioRed,
+  freyjaPhotos.redBackdropPortrait,
+  duoPhotos.countryside,
+];
 
 type MetricItem = {
   label: string;
@@ -112,11 +115,36 @@ export const Metrics = () => {
   const [liveUpdatedAt, setLiveUpdatedAt] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!instagramProfile.metricsEndpoint) return;
-
     const controller = new AbortController();
 
-    const loadMetrics = async () => {
+    const applyPayload = (payload: SocialMetricsResponse | null | undefined) => {
+      if (!payload?.metrics?.length) return false;
+
+      setLiveMetrics(payload.metrics);
+      setLiveUpdatedAt(payload.updatedAt ?? null);
+      return true;
+    };
+
+    const loadFromSupabase = async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke<SocialMetricsResponse>(
+          instagramProfile.supabaseFunctionName,
+          {
+            body: { handle: instagramProfile.handle },
+          },
+        );
+
+        if (error) throw error;
+        return applyPayload(data);
+      } catch (error) {
+        console.warn("Unable to load live social metrics from Supabase. Falling back to other sources.", error);
+        return false;
+      }
+    };
+
+    const loadFromEndpoint = async () => {
+      if (!instagramProfile.metricsEndpoint) return false;
+
       try {
         const url = new URL(instagramProfile.metricsEndpoint, window.location.origin);
         url.searchParams.set("handle", instagramProfile.handle);
@@ -125,14 +153,18 @@ export const Metrics = () => {
         if (!response.ok) throw new Error(`Metrics request failed with ${response.status}`);
 
         const payload = (await response.json()) as SocialMetricsResponse;
-        if (!payload.metrics?.length) return;
-
-        setLiveMetrics(payload.metrics);
-        setLiveUpdatedAt(payload.updatedAt ?? null);
+        return applyPayload(payload);
       } catch (error) {
         if (error instanceof DOMException && error.name === "AbortError") return;
         console.warn("Unable to load live social metrics. Falling back to static snapshot.", error);
+        return false;
       }
+    };
+
+    const loadMetrics = async () => {
+      const loadedFromSupabase = await loadFromSupabase();
+      if (loadedFromSupabase) return;
+      await loadFromEndpoint();
     };
 
     void loadMetrics();
@@ -216,7 +248,7 @@ export const Metrics = () => {
             ))}
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
-            Sample content. Full analytics report available on request. Live sync expects a server-side endpoint in `VITE_SOCIAL_METRICS_URL`.
+            Sample content. Full analytics report available on request. Live sync prefers the Supabase Edge Function `instagram-metrics` and can optionally fall back to `VITE_SOCIAL_METRICS_URL`.
           </p>
         </div>
       </div>

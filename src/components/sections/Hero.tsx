@@ -1,5 +1,5 @@
 import { ArrowDown, ArrowRight } from "lucide-react";
-import heroImg from "@/assets/gallery-6.jpg";
+import { duoPhotos } from "@/data/photos";
 
 export const Hero = () => {
   return (
@@ -8,7 +8,7 @@ export const Hero = () => {
       className="relative min-h-screen w-full overflow-hidden flex items-end pt-24 pb-16 md:pb-24"
     >
       <img
-        src={heroImg}
+        src={duoPhotos.sunsetBoat}
         alt="Godot the American Akita and Freyja the Alaskan Malamute portrait"
         className="absolute inset-0 w-full h-full object-cover animate-slow-zoom"
         fetchPriority="high"

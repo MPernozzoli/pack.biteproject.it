@@ -1,5 +1,4 @@
-import godot from "@/assets/godot-portrait.jpg";
-import freyja from "@/assets/freyja-portrait.jpg";
+import { freyjaPhotos, godotPhotos } from "@/data/photos";
 
 export type DogProfile = {
   id: "godot" | "freyja";
@@ -45,7 +44,7 @@ export const profiles: DogProfile[] = [
     environments: ["Studio", "Outdoor / nature", "Urban", "Beach & boat", "Interior sets"],
     handlerNotes:
       "Best directed by a single handler on set. Responds to calm verbal cues and hand signals. Recovery breaks every 60–90 minutes recommended.",
-    image: godot,
+    image: godotPhotos.studioRed,
   },
   {
     id: "freyja",
@@ -70,6 +69,6 @@ export const profiles: DogProfile[] = [
     environments: ["Studio", "Outdoor / adventure", "Snow & cold", "Beach & boat", "Interior sets"],
     handlerNotes:
       "Thrives on positive reinforcement. Performs strongest in cooler conditions. Travels comfortably by car, train, and short-haul flights.",
-    image: freyja,
+    image: freyjaPhotos.homePortrait,
   },
 ];

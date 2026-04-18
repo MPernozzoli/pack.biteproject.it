@@ -1,5 +1,5 @@
 import { useReveal } from "@/hooks/use-reveal";
-import duo from "@/assets/gallery-6.jpg";
+import { duoPhotos } from "@/data/photos";
 
 const tags = [
   "Lifestyle campaigns",
@@ -42,7 +42,7 @@ export const DuoProfile = () => {
           <div className="lg:col-span-6 order-1 lg:order-2">
             <div className="relative aspect-[5/6] overflow-hidden">
               <img
-                src={duo}
+                src={duoPhotos.studioWide}
                 alt="Godot and Freyja duo portrait"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"

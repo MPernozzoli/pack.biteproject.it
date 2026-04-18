@@ -1,10 +1,4 @@
-import g1 from "@/assets/gallery-1.jpg";
-import g2 from "@/assets/gallery-2.jpg";
-import g3 from "@/assets/gallery-3.jpg";
-import g4 from "@/assets/gallery-4.jpg";
-import g5 from "@/assets/gallery-5.jpg";
-import g6 from "@/assets/gallery-6.jpg";
-import lifestyle from "@/assets/lifestyle-boat.jpg";
+import { duoPhotos, freyjaPhotos, godotPhotos } from "@/data/photos";
 
 export const navLinks = [
   { id: "overview", label: "Overview" },
@@ -20,6 +14,7 @@ export const navLinks = [
 export const instagramProfile = {
   handle: "godotconlat",
   url: "https://instagram.com/godotconlat",
+  supabaseFunctionName: "instagram-metrics",
   metricsEndpoint: import.meta.env.VITE_SOCIAL_METRICS_URL?.trim() || "",
 };
 
@@ -114,48 +109,84 @@ export const languages = [
 
 export const partnerships = [
   {
-    brand: "Selected Sample Collaboration",
-    type: "Outdoor Apparel — Lifestyle Reel",
-    deliverables: "1 Reel · 3 Stories · Usage rights 30 days",
-    outcome: "Concept-ready format suitable for premium adventure brands.",
-    image: g3,
+    brand: "Concept Format",
+    type: "Marine Safety / Boat Lifestyle",
+    deliverables: "Hero stills · Reel cutdown · Story sequence",
+    outcome: "High-trust sailing imagery with authentic onboard context.",
+    image: freyjaPhotos.foodBoat,
   },
   {
-    brand: "Selected Sample Collaboration",
-    type: "Premium Pet Goods — Product Feature",
-    deliverables: "Carousel post · 2 Stories · UGC pack",
-    outcome: "Editorial product placement with authentic environment.",
-    image: g5,
+    brand: "Concept Format",
+    type: "Pet Accessories / Outdoor Apparel",
+    deliverables: "Carousel post · Product stills · UGC pack",
+    outcome: "Editorial product placement in real outdoor and city settings.",
+    image: godotPhotos.lifeJacket,
   },
   {
-    brand: "Selected Sample Collaboration",
-    type: "Travel & Sailing — Branded Storytelling",
-    deliverables: "Reel series · Behind-the-scenes set",
-    outcome: "Cinematic narrative built around boat-life context.",
-    image: lifestyle,
+    brand: "Concept Format",
+    type: "Travel / Hospitality / Family Adventure",
+    deliverables: "Campaign stills · Duo narrative set · Vertical cut",
+    outcome: "Warm duo storytelling with strong contrast between the two dogs.",
+    image: duoPhotos.sunsetBoat,
   },
 ];
 
 export const galleryItems = [
-  { src: g6, category: "Duo", alt: "Godot and Freyja duo studio portrait" },
-  { src: g1, category: "Outdoor", alt: "Akita running through tall grass at sunset" },
-  { src: g2, category: "Portraits", alt: "Malamute editorial portrait in misty forest" },
-  { src: g3, category: "Lifestyle", alt: "Two dogs walking with handler on mountain trail" },
-  { src: g4, category: "Full Body", alt: "Akita full body studio shot" },
-  { src: g5, category: "Product", alt: "Malamute close-up with leather collar" },
-  { src: lifestyle, category: "Outdoor", alt: "Two dogs on sailing yacht at sunset" },
-  { src: g6, category: "Portraits", alt: "Duo portrait against dark background" },
-  { src: g1, category: "Lifestyle", alt: "Outdoor lifestyle action shot" },
+  { src: duoPhotos.studioTight, category: "Duo", alt: "Godot and Freyja duo portrait in studio" },
+  { src: duoPhotos.studioWide, category: "Studio", alt: "Godot and Freyja full-body studio portrait" },
+  { src: duoPhotos.sunsetBoat, category: "Boat", alt: "Godot and Freyja aboard the sailboat at sunset" },
+  { src: duoPhotos.countryside, category: "Outdoor", alt: "Godot and Freyja in the countryside" },
+  { src: duoPhotos.dogRun, category: "Outdoor", alt: "Godot and Freyja in the dog park" },
+  { src: duoPhotos.twilightHarbor, category: "Duo", alt: "Godot and Freyja together near the harbor at sunset" },
+  { src: duoPhotos.eventPoster, category: "Events", alt: "Godot and Freyja featured at pet event" },
+  { src: godotPhotos.editorialWithHandler, category: "Lifestyle", alt: "Godot with handler during golden hour" },
+  { src: godotPhotos.bariCloseup, category: "Portraits", alt: "Close portrait of Godot in Bari" },
+  { src: godotPhotos.lifeJacket, category: "Boat", alt: "Godot wearing a life jacket on board" },
+  { src: godotPhotos.pumpkinPortrait, category: "Seasonal", alt: "Godot posed among pumpkins" },
+  { src: godotPhotos.bariPortrait, category: "City", alt: "Godot by the sea in Bari" },
+  { src: godotPhotos.seaPose, category: "City", alt: "Godot posed by the sea near a street lamp" },
+  { src: godotPhotos.outdoorPortrait, category: "Portraits", alt: "Outdoor portrait of Godot with pumpkins in the background" },
+  { src: godotPhotos.pumpkinSide, category: "Seasonal", alt: "Profile portrait of Godot among pumpkins" },
+  { src: godotPhotos.atHelm, category: "Boat", alt: "Godot at the helm of the sailboat" },
+  { src: godotPhotos.studioRed, category: "Studio", alt: "Godot studio portrait through red paper" },
+  { src: godotPhotos.barbieEvent, category: "Events", alt: "Godot on pink carpet at Barbie exhibition" },
+  { src: godotPhotos.gangway, category: "Boat", alt: "Godot on the gangway of the boat" },
+  { src: freyjaPhotos.brindisi, category: "City", alt: "Freyja in Brindisi at sunset" },
+  { src: freyjaPhotos.homePortrait, category: "Portraits", alt: "Portrait of Freyja indoors" },
+  { src: freyjaPhotos.waiting, category: "Lifestyle", alt: "Freyja waiting on the sidewalk" },
+  { src: freyjaPhotos.benchLook, category: "Lifestyle", alt: "Freyja lying down outdoors" },
+  { src: freyjaPhotos.redBackdropWide, category: "Studio", alt: "Freyja portrait through red paper backdrop" },
+  { src: freyjaPhotos.wetPortrait, category: "Water", alt: "Wet portrait of Freyja in shallow water" },
+  { src: freyjaPhotos.redBackdropPortrait, category: "Studio", alt: "Freyja studio portrait with red backdrop" },
+  { src: freyjaPhotos.wetWater, category: "Water", alt: "Freyja standing in the water" },
+  { src: freyjaPhotos.foodBoat, category: "Boat", alt: "Freyja aboard the boat looking at food" },
+  { src: freyjaPhotos.goldenTongue, category: "Boat", alt: "Close portrait of Freyja during golden hour on the boat" },
+  { src: freyjaPhotos.goldenHour, category: "Boat", alt: "Freyja on the boat at golden hour" },
+  { src: freyjaPhotos.cutePortrait, category: "Portraits", alt: "Cute close portrait of Freyja" },
+  { src: freyjaPhotos.couch, category: "Lifestyle", alt: "Freyja relaxed on the couch" },
+  { src: freyjaPhotos.flowersClose, category: "Outdoor", alt: "Freyja among purple flowers" },
+  { src: freyjaPhotos.seafront, category: "City", alt: "Freyja by the seafront" },
+  { src: freyjaPhotos.wetClose, category: "Water", alt: "Frejya wet and smiling in the water" },
+  { src: freyjaPhotos.park, category: "Outdoor", alt: "Freyja in the countryside with a red bandana" },
+  { src: freyjaPhotos.cityPortrait, category: "City", alt: "Freyja in Piazza Liberty" },
+  { src: freyjaPhotos.flowersField, category: "Outdoor", alt: "Freyja in a field with dandelions" },
+  { src: freyjaPhotos.sneeze, category: "Lifestyle", alt: "Freyja sneezing on the boat" },
+  { src: freyjaPhotos.lookout, category: "Boat", alt: "Freyja looking out from the boat" },
+  { src: freyjaPhotos.beachNight, category: "Water", alt: "Freyja on the beach at night" },
 ];
 
 export const galleryCategories = [
   "All",
   "Portraits",
-  "Full Body",
+  "Studio",
   "Lifestyle",
   "Outdoor",
-  "Product",
+  "Boat",
+  "Water",
   "Duo",
+  "City",
+  "Seasonal",
+  "Events",
 ] as const;
 
 export const services = [

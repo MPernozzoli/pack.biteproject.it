@@ -1,7 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { useReveal } from "@/hooks/use-reveal";
-import lifestyle from "@/assets/lifestyle-boat.jpg";
-import g3 from "@/assets/gallery-3.jpg";
+import { duoPhotos } from "@/data/photos";
 
 export const ChoosePath = () => {
   const ref1 = useReveal<HTMLAnchorElement>();
@@ -24,7 +23,7 @@ export const ChoosePath = () => {
             className="reveal group relative overflow-hidden aspect-[4/5] md:aspect-[5/6] block"
           >
             <img
-              src={lifestyle}
+              src={duoPhotos.sunsetBoat}
               alt="Brands collaboration context"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               loading="lazy"
@@ -53,7 +52,7 @@ export const ChoosePath = () => {
             style={{ transitionDelay: "120ms" }}
           >
             <img
-              src={g3}
+              src={duoPhotos.studioTight}
               alt="Casting and production context"
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               loading="lazy"
