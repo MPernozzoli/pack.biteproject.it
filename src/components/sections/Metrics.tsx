@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { metrics, topCountries, languages } from "@/data/site";
+import { instagramProfile, languages, metrics as fallbackMetrics, topCountries } from "@/data/site";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useReveal } from "@/hooks/use-reveal";
 import g1 from "@/assets/gallery-1.jpg";
@@ -96,14 +96,64 @@ const BarRow = ({ label, value }: { label: string; value: number }) => (
 
 const topContent = [g6, g1, g3, g5];
 
+type MetricItem = {
+  label: string;
+  value: number;
+  suffix: string;
+};
+
+type SocialMetricsResponse = {
+  metrics?: MetricItem[];
+  updatedAt?: string;
+};
+
 export const Metrics = () => {
+  const [liveMetrics, setLiveMetrics] = useState<MetricItem[] | null>(null);
+  const [liveUpdatedAt, setLiveUpdatedAt] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!instagramProfile.metricsEndpoint) return;
+
+    const controller = new AbortController();
+
+    const loadMetrics = async () => {
+      try {
+        const url = new URL(instagramProfile.metricsEndpoint, window.location.origin);
+        url.searchParams.set("handle", instagramProfile.handle);
+
+        const response = await fetch(url.toString(), { signal: controller.signal });
+        if (!response.ok) throw new Error(`Metrics request failed with ${response.status}`);
+
+        const payload = (await response.json()) as SocialMetricsResponse;
+        if (!payload.metrics?.length) return;
+
+        setLiveMetrics(payload.metrics);
+        setLiveUpdatedAt(payload.updatedAt ?? null);
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+        console.warn("Unable to load live social metrics. Falling back to static snapshot.", error);
+      }
+    };
+
+    void loadMetrics();
+
+    return () => controller.abort();
+  }, []);
+
+  const metrics = liveMetrics ?? fallbackMetrics;
+  const isLive = Boolean(liveMetrics);
+
   return (
     <section id="metrics" className="py-24 md:py-32 border-t border-hairline">
       <div className="container-editorial">
         <SectionHeader
           eyebrow="Metrics & audience"
           title="Performance, audience, and reach."
-          description="A snapshot of social performance and audience composition. Metrics are updated regularly and full performance data is available upon request."
+          description={`A snapshot of social performance and audience composition for @${instagramProfile.handle}. ${
+            isLive
+              ? "The headline numbers below are synced from a connected metrics endpoint."
+              : "The headline numbers below are currently a curated snapshot until the live Instagram integration is connected."
+          }`}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-12 border-r border-b border-hairline">
@@ -146,7 +196,7 @@ export const Metrics = () => {
               <h3 className="font-serif text-2xl md:text-3xl text-offwhite">Recent highlights</h3>
             </div>
             <span className="hidden md:block text-xs text-muted-foreground">
-              Updated regularly
+              {isLive && liveUpdatedAt ? `Synced ${new Date(liveUpdatedAt).toLocaleDateString("it-IT")}` : "Updated regularly"}
             </span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
@@ -166,7 +216,7 @@ export const Metrics = () => {
             ))}
           </div>
           <p className="mt-6 text-xs text-muted-foreground">
-            Sample content. Full analytics report available on request.
+            Sample content. Full analytics report available on request. Live sync expects a server-side endpoint in `VITE_SOCIAL_METRICS_URL`.
           </p>
         </div>
       </div>

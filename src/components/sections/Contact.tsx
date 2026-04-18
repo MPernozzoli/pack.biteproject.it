@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { SectionHeader } from "@/components/SectionHeader";
 import { toast } from "@/hooks/use-toast";
+import { instagramProfile } from "@/data/site";
 
 const inquirySchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100),
@@ -73,7 +74,12 @@ export const Contact = () => {
 
             <div className="mt-12 space-y-1">
               <ContactRow icon={<Mail size={16} />} label="Email" value="hello@biteproject.it" href="mailto:hello@biteproject.it" />
-              <ContactRow icon={<Instagram size={16} />} label="Instagram" value="@pack.bite" href="https://instagram.com" />
+              <ContactRow
+                icon={<Instagram size={16} />}
+                label="Instagram"
+                value={`@${instagramProfile.handle}`}
+                href={instagramProfile.url}
+              />
               <ContactRow icon={<MessageCircle size={16} />} label="WhatsApp" value="Message us directly" href="https://wa.me/00000000000" />
               <ContactRow icon={<MapPin size={16} />} label="Based in" value="Italy — available worldwide" />
             </div>

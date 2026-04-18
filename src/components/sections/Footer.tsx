@@ -1,4 +1,4 @@
-import { navLinks } from "@/data/site";
+import { instagramProfile, navLinks } from "@/data/site";
 
 export const Footer = () => (
   <footer className="border-t border-hairline pt-16 pb-10">
@@ -31,7 +31,7 @@ export const Footer = () => (
           <div className="label-eyebrow mb-5">Connect</div>
           <ul className="space-y-3 text-sm">
             <li><a href="mailto:hello@biteproject.it" className="text-muted-foreground hover:text-offwhite transition-colors">hello@biteproject.it</a></li>
-            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-offwhite transition-colors">Instagram</a></li>
+            <li><a href={instagramProfile.url} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-offwhite transition-colors">Instagram</a></li>
             <li><a href="https://wa.me/00000000000" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-offwhite transition-colors">WhatsApp</a></li>
           </ul>
         </div>

@@ -17,6 +17,14 @@ export const navLinks = [
   { id: "contact", label: "Contact" },
 ];
 
+export const instagramProfile = {
+  handle: "godotconlat",
+  url: "https://instagram.com/godotconlat",
+  metricsEndpoint: import.meta.env.VITE_SOCIAL_METRICS_URL?.trim() || "",
+};
+
+// TODO: Update `instagramProfile.handle` and `instagramProfile.url` as soon as the Instagram rename is finalized.
+
 export const overviewCards = [
   {
     label: "01",
