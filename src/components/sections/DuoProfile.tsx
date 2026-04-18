@@ -2,51 +2,60 @@ import { useReveal } from "@/hooks/use-reveal";
 import { duoPhotos } from "@/data/photos";
 
 const tags = [
-  "Lifestyle campaigns",
-  "Outdoor brands",
-  "Family / travel storytelling",
-  "Premium pet accessories",
-  "Editorial content",
-  "Cinematic narrative",
+  "Campaign stills",
+  "Outdoor & boat",
+  "Family travel",
+  "Premium pet goods",
+  "Editorial",
+  "Long-form narrative",
 ];
 
 export const DuoProfile = () => {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <section className="py-24 md:py-32 border-t border-hairline bg-surface-elevated/40">
+    <section className="page-section pt-6 md:pt-8">
       <div className="container-editorial">
-        <div ref={ref} className="reveal grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          <div className="lg:col-span-6 order-2 lg:order-1">
-            <div className="label-eyebrow text-bronze mb-5">Duo profile</div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-offwhite leading-[1.05]">
-              Together they tell a richer story.
-            </h2>
-            <p className="mt-6 text-base md:text-lg text-muted-foreground leading-relaxed">
-              As a duo, Godot and Freyja bring contrast, character, and a strong
-              visual identity that translates naturally into campaign imagery and
-              cinematic lifestyle content. Two silhouettes, two coats, one scene.
-            </p>
+        <div
+          ref={ref}
+          className="reveal grid items-center gap-10 lg:grid-cols-12 lg:gap-16"
+        >
+          <div className="order-2 lg:order-1 lg:col-span-6">
+            <div className="glass-panel-soft rounded-[32px] p-8 md:p-10">
+              <span className="glass-chip-bronze mb-5 inline-flex items-center gap-2 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.26em] text-cream">
+                <span className="h-1.5 w-1.5 rounded-full bg-charcoal/70" />
+                Duo file
+              </span>
+              <h2 className="font-serif text-4xl leading-[1.05] tracking-tight text-cream md:text-5xl lg:text-6xl">
+                Together, the frame stops begging for a gimmick.
+              </h2>
+              <p className="mt-6 font-sans text-base leading-relaxed text-muted-foreground md:text-lg">
+                One coat reads firelight; the other reads fog. They share a rhythm on leash and on
+                deck, so the camera can stay wide and let the space do the talking.
+              </p>
 
-            <div className="label-eyebrow mt-10 mb-4">Best for</div>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((t) => (
-                <span
-                  key={t}
-                  className="text-[12px] uppercase tracking-[0.14em] border border-hairline text-offwhite/85 px-3 py-2"
-                >
-                  {t}
-                </span>
-              ))}
+              <div className="label-eyebrow mb-4 mt-10 text-bronze">Best when the brief asks for</div>
+              <div className="flex flex-wrap gap-2">
+                {tags.map((t) => (
+                  <span
+                    key={t}
+                    className="glass-chip rounded-full px-3 py-2 font-sans text-[11px] font-medium uppercase tracking-[0.12em] text-cream/85"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
-          <div className="lg:col-span-6 order-1 lg:order-2">
-            <div className="relative aspect-[5/6] overflow-hidden">
-              <img
-                src={duoPhotos.studioWide}
-                alt="Godot and Freyja duo portrait"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-              />
+          <div className="order-1 lg:order-2 lg:col-span-6">
+            <div className="glass-frame rounded-[34px] p-2">
+              <div className="relative aspect-[5/6] overflow-hidden rounded-[28px]">
+                <img
+                  src={duoPhotos.studioWide}
+                  alt="Godot and Freyja, full-length studio portrait"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -9,30 +9,30 @@ const ServiceCard = ({ title, body, index }: { title: string; body: string; inde
   return (
     <div
       ref={ref}
-      className="reveal p-8 border-t border-l border-hairline hover:bg-surface-elevated transition-colors"
-      style={{ transitionDelay: `${index * 50}ms` }}
+      className="reveal rounded-[24px] border border-cream/10 bg-cream/[0.04] p-8 transition-all duration-500 hover:-translate-y-0.5 hover:border-bronze/25 lg:p-9"
+      style={{ transitionDelay: `${index * 45}ms` }}
     >
-      <div className="label-eyebrow text-bronze mb-5">
-        {String(index + 1).padStart(2, "0")}
-      </div>
-      <h3 className="font-serif text-xl text-offwhite mb-3 leading-tight">{title}</h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+      <div className="font-serif text-2xl text-bronze/90">{String(index + 1).padStart(2, "0")}</div>
+      <h3 className="mb-3 mt-4 font-serif text-xl leading-tight text-cream">{title}</h3>
+      <p className="font-sans text-sm leading-relaxed text-muted-foreground">{body}</p>
     </div>
   );
 };
 
 export const Services = () => (
-  <section className="py-24 md:py-32 border-t border-hairline bg-surface-elevated/40">
+  <section className="page-section pt-6 md:pt-8">
     <div className="container-editorial">
-      <SectionHeader
-        eyebrow="Services & deliverables"
-        title="What you can book."
-        description="A flexible roster of formats, available individually or bundled into a campaign package."
-      />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mt-14 border-r border-b border-hairline">
-        {services.map((s, i) => (
-          <ServiceCard key={s.title} {...s} index={i} />
-        ))}
+      <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+        <SectionHeader
+          eyebrow="Deliverables"
+          title="What can be commissioned."
+          description="Formats stack or split depending on the brief — always with one handler on the call sheet and breaks written in ink, not implied."
+        />
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {services.map((s, i) => (
+            <ServiceCard key={s.title} {...s} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -41,27 +41,28 @@ export const Services = () => (
 const WhyItem = ({ title, body, index }: { title: string; body: string; index: number }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <div ref={ref} className="reveal" style={{ transitionDelay: `${index * 70}ms` }}>
-      <div className="font-serif text-3xl md:text-4xl text-bronze mb-4">
-        0{index + 1}
-      </div>
-      <h3 className="font-serif text-2xl text-offwhite mb-3 leading-tight">{title}</h3>
-      <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+    <div ref={ref} className="reveal" style={{ transitionDelay: `${index * 65}ms` }}>
+      <div className="font-serif text-3xl text-bronze md:text-4xl">0{index + 1}</div>
+      <h3 className="mb-3 mt-4 font-serif text-2xl leading-tight text-cream">{title}</h3>
+      <p className="font-sans text-sm leading-relaxed text-muted-foreground">{body}</p>
     </div>
   );
 };
 
 export const Why = () => (
-  <section className="py-24 md:py-32 border-t border-hairline">
+  <section className="page-section pt-4 md:pt-6">
     <div className="container-editorial">
-      <SectionHeader
-        eyebrow="Why work with them"
-        title="Built for credible, premium creative work."
-      />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 mt-16">
-        {whyPoints.map((p, i) => (
-          <WhyItem key={p.title} {...p} index={i} />
-        ))}
+      <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+        <SectionHeader
+          eyebrow="Why them"
+          title="Why this pack, specifically."
+          description="Not because the internet needs more dogs — because these two already live the stories brands keep trying to rent."
+        />
+        <div className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16">
+          {whyPoints.map((p, i) => (
+            <WhyItem key={p.title} {...p} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -81,26 +82,29 @@ const PressCard = ({
   const ref = useReveal<HTMLDivElement>();
   const handleClick = () =>
     toast({
-      title: "Request received",
-      description: "Materials will be sent to your inbox shortly.",
+      title: "Request logged",
+      description: "Someone from the pack will follow up by email with the right file.",
     });
   return (
     <div
       ref={ref}
-      className="reveal p-8 border border-hairline flex flex-col"
-      style={{ transitionDelay: `${index * 80}ms` }}
+      className="reveal flex flex-col rounded-[24px] border border-cream/12 bg-cream/[0.05] p-8 transition-all duration-500 hover:border-bronze/30"
+      style={{ transitionDelay: `${index * 70}ms` }}
     >
-      <Download size={20} className="text-bronze mb-6" />
-      <h3 className="font-serif text-2xl text-offwhite mb-2">{title}</h3>
-      <p className="text-sm text-muted-foreground mb-6 flex-1">{body}</p>
+      <div className="glass-chip-bronze mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full p-0">
+        <Download size={18} className="text-charcoal" />
+      </div>
+      <h3 className="mb-2 font-serif text-2xl text-cream">{title}</h3>
+      <p className="mb-6 flex-1 font-sans text-sm leading-relaxed text-muted-foreground">{body}</p>
       <button
+        type="button"
         onClick={handleClick}
-        className="group inline-flex items-center justify-between gap-4 border-t border-hairline pt-4 text-[12px] uppercase tracking-[0.2em] text-offwhite hover:text-bronze transition-colors"
+        className="group flex items-center justify-between gap-4 border-t border-cream/10 pt-4 font-sans text-[12px] font-semibold uppercase tracking-[0.2em] text-cream transition-colors hover:text-bronze"
       >
         {action}
         <ArrowUpRight
           size={16}
-          className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+          className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       </button>
     </div>
@@ -108,17 +112,19 @@ const PressCard = ({
 };
 
 export const PressKit = () => (
-  <section className="py-24 md:py-32 border-t border-hairline bg-surface-elevated/40">
+  <section className="page-section pt-4 md:pt-6">
     <div className="container-editorial">
-      <SectionHeader
-        eyebrow="Press kit / downloads"
-        title="Materials for professionals."
-        description="Request the documents you need for your review process. Files are sent over email after a brief verification."
-      />
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-5 mt-14">
-        {pressKitItems.map((p, i) => (
-          <PressCard key={p.title} {...p} index={i} />
-        ))}
+      <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+        <SectionHeader
+          eyebrow="Downloads"
+          title="Files for buyers, agents, and editors."
+          description="Nothing auto-downloads here — each asset is sent after a quick human check so the right version lands with the right team."
+        />
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 md:gap-5">
+          {pressKitItems.map((p, i) => (
+            <PressCard key={p.title} {...p} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   </section>

@@ -12,24 +12,26 @@ const ProjectCard = ({
 }: (typeof partnerships)[number] & { index: number }) => {
   const ref = useReveal<HTMLDivElement>();
   return (
-    <div ref={ref} className="reveal group" style={{ transitionDelay: `${index * 100}ms` }}>
-      <div className="relative aspect-[4/5] overflow-hidden mb-6">
-        <img
-          src={image}
-          alt={type}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-          loading="lazy"
-        />
+    <div ref={ref} className="reveal group" style={{ transitionDelay: `${index * 90}ms` }}>
+      <div className="glass-frame mb-6 rounded-[30px] p-2 transition-shadow duration-500 group-hover:shadow-[0_0_0_1px_rgba(214,184,156,0.3)]">
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[24px]">
+          <img
+            src={image}
+            alt={type}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.04]"
+            loading="lazy"
+          />
+        </div>
       </div>
-      <div className="label-eyebrow text-bronze mb-3">{brand}</div>
-      <h3 className="font-serif text-2xl text-offwhite mb-3 leading-tight">{type}</h3>
-      <div className="border-t border-hairline pt-4 space-y-2 text-sm">
+      <div className="label-eyebrow mb-2 text-bronze">{brand}</div>
+      <h3 className="mb-3 font-serif text-2xl leading-tight text-cream">{type}</h3>
+      <div className="space-y-2 border-t border-cream/10 pt-4 font-sans text-sm">
         <p className="text-muted-foreground">
-          <span className="label-eyebrow mr-2">Deliverables —</span>
+          <span className="label-eyebrow mr-2 text-cream/50">Deliverables —</span>
           {deliverables}
         </p>
         <p className="text-muted-foreground">
-          <span className="label-eyebrow mr-2">Outcome —</span>
+          <span className="label-eyebrow mr-2 text-cream/50">Outcome —</span>
           {outcome}
         </p>
       </div>
@@ -38,17 +40,19 @@ const ProjectCard = ({
 };
 
 export const Work = () => (
-  <section id="work" className="py-24 md:py-32 border-t border-hairline bg-surface-elevated/40">
+  <section id="work" className="page-section pt-6 md:pt-8">
     <div className="container-editorial">
-      <SectionHeader
-        eyebrow="Partnerships / previous work"
-        title="Selected sample collaborations and campaign-ready concepts."
-        description="A reference set of collaboration formats, prepared as concepts and sample executions. Real partnership case studies are added as they go live."
-      />
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10 mt-14">
-        {partnerships.map((p, i) => (
-          <ProjectCard key={i} {...p} index={i} />
-        ))}
+      <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+        <SectionHeader
+          eyebrow="Work"
+          title="Recent lanes and open concepts."
+          description="A mix of shipped collaborations and treatments still on the table — each written so buyers can see how the dogs move through a brief without guessing."
+        />
+        <div className="mt-14 grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-3">
+          {partnerships.map((p, i) => (
+            <ProjectCard key={i} {...p} index={i} />
+          ))}
+        </div>
       </div>
     </div>
   </section>

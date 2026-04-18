@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ["'Instrument Serif'", "Times New Roman", "serif"],
-        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["'Playfair Display'", "Georgia", "serif"],
+        sans: ["'DM Sans'", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -29,6 +29,8 @@ export default {
           deep: "hsl(var(--bronze-deep))",
         },
         offwhite: "hsl(var(--offwhite))",
+        cream: "hsl(var(--cream))",
+        charcoal: "hsl(var(--charcoal))",
         surface: {
           DEFAULT: "hsl(var(--surface))",
           elevated: "hsl(var(--surface-elevated))",
@@ -94,15 +96,20 @@ export default {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         "slow-zoom": {
-          "0%": { transform: "scale(1.05)" },
+          "0%": { transform: "scale(1.06)" },
           "100%": { transform: "scale(1)" },
+        },
+        floatGentle: {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "50%": { transform: "translate(12px, -10px) scale(1.03)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-up": "fade-up 1s cubic-bezier(0.22,1,0.36,1) both",
-        "slow-zoom": "slow-zoom 8s ease-out both",
+        "slow-zoom": "slow-zoom 12s ease-out both",
+        "float-gentle": "floatGentle 14s ease-in-out infinite",
       },
     },
   },

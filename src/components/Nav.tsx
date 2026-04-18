@@ -1,12 +1,23 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { navLinks } from "@/data/site";
 import { cn } from "@/lib/utils";
+
+const linkDescriptions: Record<string, string> = {
+  overview: "Who they are, at a glance.",
+  brands: "Partnerships, content, and deliverables.",
+  casting: "Temperament, logistics, and set notes.",
+  profiles: "Individual talent cards.",
+  metrics: "Reach and audience, plainly stated.",
+  work: "Concepts and recent collaborations.",
+  gallery: "Stills from life on the road and water.",
+  contact: "Direct line to the handler.",
+};
 
 export const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [logoHovered, setLogoHovered] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -15,94 +26,161 @@ export const Nav = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = open ? "hidden" : prev;
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
   return (
-    <header
+    <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 md:px-6 lg:px-8",
-        scrolled ? "pt-3 md:pt-4" : "pt-5 md:pt-6",
+        "fixed top-0 left-0 right-0 z-50 px-4 pt-3 transition-all duration-500 md:px-6 md:pt-4",
       )}
     >
       <div
         className={cn(
-          "mx-auto w-full max-w-[1380px] rounded-[28px] border border-offwhite/10 bg-background/70 shadow-[0_22px_80px_-30px_rgba(0,0,0,0.9)] backdrop-blur-xl transition-all duration-500",
-          scrolled ? "bg-background/82" : "bg-background/60",
+          "mx-auto flex h-16 max-w-[1380px] items-center justify-between rounded-[30px] px-5 transition-all duration-500 md:h-[4.75rem] md:px-7",
+          "nav-shell-dark shadow-[0_28px_80px_rgba(0,0,0,0.45)]",
+          scrolled && "shadow-[0_32px_90px_rgba(0,0,0,0.55)]",
         )}
       >
-        <div className="relative flex items-center justify-between h-16 md:h-20 px-5 md:px-7 lg:px-8">
-          <div className="absolute -top-3 left-5 md:left-7 lg:left-8">
-            <span className="inline-flex items-center gap-2 rounded-full border border-offwhite/10 bg-secondary/90 px-3 py-1 text-[10px] uppercase tracking-[0.24em] text-offwhite/70 shadow-[0_14px_30px_-18px_rgba(0,0,0,0.8)] backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-bronze" />
-              Bite Project
-            </span>
-          </div>
-
-          <a href="#top" className="group pr-4">
-            <span className="block font-serif text-[1.35rem] leading-none text-offwhite tracking-tight">
-              BITE&apos;s PACK
-            </span>
-            <span className="mt-1 block text-[10px] uppercase tracking-[0.22em] text-muted-foreground group-hover:text-bronze transition-colors">
-              Godot &amp; Freyja
-            </span>
-          </a>
-
-          <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                className="text-[13px] tracking-wide text-muted-foreground hover:text-offwhite transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          <div className="hidden lg:block">
-            <Button
-              asChild
-              size="sm"
-              className="rounded-full bg-bronze hover:bg-bronze/90 text-primary-foreground px-5 h-10 text-[12px] uppercase tracking-[0.18em] font-medium"
+        <a
+          href="#top"
+          className={cn(
+            "group relative inline-flex flex-col gap-0.5 pr-4 font-serif text-lg font-semibold tracking-tight text-cream md:text-xl",
+          )}
+          onMouseEnter={() => setLogoHovered(true)}
+          onMouseLeave={() => setLogoHovered(false)}
+        >
+          <span className="inline-flex items-baseline gap-0 overflow-hidden whitespace-nowrap">
+            <span className="transition-colors duration-300 group-hover:text-bronze">G</span>
+            <span
+              className={cn(
+                "inline-block overflow-hidden transition-all duration-500 ease-out",
+                logoHovered ? "max-w-[3.2em] opacity-100" : "max-w-0 opacity-0",
+              )}
             >
-              <a href="#contact">Get in touch</a>
-            </Button>
-          </div>
-
-          <button
-            onClick={() => setOpen(!open)}
-            className="lg:hidden text-offwhite p-2"
-            aria-label="Toggle menu"
+              odot
+            </span>
+            <span className="mx-0.5 text-bronze/90 italic transition-opacity duration-300 group-hover:opacity-100">
+              &amp;
+            </span>
+            <span className="transition-colors duration-300 group-hover:text-bronze">F</span>
+            <span
+              className={cn(
+                "inline-block overflow-hidden transition-all duration-500 ease-out delay-75",
+                logoHovered ? "max-w-[3.5em] opacity-100" : "max-w-0 opacity-0",
+              )}
+            >
+              reyja
+            </span>
+          </span>
+          <span
+            className={cn(
+              "font-sans text-[10px] font-medium uppercase tracking-[0.26em] text-muted-foreground transition-all duration-400",
+              logoHovered ? "opacity-0 max-h-0" : "opacity-100 max-h-4",
+            )}
           >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </div>
+            BITE · PACK
+          </span>
+        </a>
 
-      <div
-        className={cn(
-          "mx-auto mt-3 w-full max-w-[1380px] overflow-hidden rounded-[28px] border border-offwhite/10 bg-background/92 shadow-[0_24px_70px_-34px_rgba(0,0,0,0.95)] backdrop-blur-xl transition-all duration-500 lg:hidden",
-          open ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0 border-transparent mt-0",
-        )}
-      >
-        <nav className="flex flex-col py-6 px-6 gap-4">
+        <div className="hidden items-center gap-1 lg:flex lg:gap-2">
           {navLinks.map((link) => (
             <a
               key={link.id}
               href={`#${link.id}`}
-              onClick={() => setOpen(false)}
-              className="text-base text-offwhite/90 hover:text-bronze transition-colors py-1"
+              className={cn(
+                "relative rounded-full px-3 py-2 font-sans text-[13px] tracking-wide text-cream/80 transition-colors duration-300 hover:text-cream",
+                "after:absolute after:bottom-1 after:left-1/2 after:h-px after:w-0 after:-translate-x-1/2 after:bg-bronze after:transition-all after:duration-300 hover:after:w-[60%]",
+              )}
             >
               {link.label}
             </a>
           ))}
+        </div>
+
+        <div className="hidden lg:block">
           <a
             href="#contact"
-            onClick={() => setOpen(false)}
-            className="mt-4 inline-flex items-center justify-center rounded-full bg-bronze text-primary-foreground h-11 px-6 text-[12px] uppercase tracking-[0.18em] font-medium"
+            className="glass-button inline-flex h-10 items-center justify-center gap-2 px-6 py-0"
           >
             Get in touch
+            <ArrowRight size={14} className="opacity-90" />
           </a>
-        </nav>
+        </div>
+
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen(!open)}
+            className={cn(
+              "inline-flex h-11 w-11 items-center justify-center rounded-full transition-all duration-300",
+              "nav-chip-dark text-cream",
+            )}
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
-    </header>
+
+      {open && (
+        <div
+          id="mobile-navigation"
+          className="absolute inset-x-0 top-full z-40 mt-3 max-h-[min(85dvh,640px)] overflow-hidden px-4 md:px-6 lg:hidden"
+        >
+          <div
+            className={cn(
+              "mx-auto max-h-full overflow-y-auto rounded-[28px] border border-cream/10 p-5 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300",
+              "nav-menu-dark",
+            )}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <span className="glass-chip-bronze inline-flex items-center gap-2 px-3 py-1.5 text-[10px] font-sans uppercase tracking-[0.24em] text-cream">
+                <span className="h-1.5 w-1.5 rounded-full bg-cream/90" />
+                Navigate
+              </span>
+            </div>
+            <nav className="flex flex-col gap-2">
+              {navLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    "group flex items-center justify-between gap-4 rounded-2xl border border-cream/10 px-4 py-4 transition-all duration-300",
+                    "bg-cream/[0.04] hover:border-bronze/35 hover:bg-cream/[0.07]",
+                  )}
+                >
+                  <div className="min-w-0 text-left">
+                    <p className="font-serif text-xl leading-none text-cream">{link.label}</p>
+                    <p className="mt-2 max-w-[16rem] font-sans text-xs leading-relaxed text-muted-foreground">
+                      {linkDescriptions[link.id] ?? ""}
+                    </p>
+                  </div>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream/15 bg-cream/[0.06] text-cream/85 transition-transform duration-300 group-hover:translate-x-0.5">
+                    <ArrowRight size={16} />
+                  </span>
+                </a>
+              ))}
+            </nav>
+            <a
+              href="#contact"
+              onClick={() => setOpen(false)}
+              className="glass-button mt-5 flex h-12 w-full items-center justify-center gap-2"
+            >
+              Get in touch
+              <ArrowRight size={16} />
+            </a>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };

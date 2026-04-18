@@ -14,7 +14,12 @@ import { Footer } from "@/components/sections/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background text-foreground antialiased">
+    <div className="site-shell min-h-screen bg-background text-foreground antialiased">
+      <div className="site-shell__ambient" aria-hidden>
+        <span className="site-shell__orb site-shell__orb--one" />
+        <span className="site-shell__orb site-shell__orb--two" />
+        <span className="site-shell__orb site-shell__orb--three" />
+      </div>
       <Nav />
       <main>
         <Hero />

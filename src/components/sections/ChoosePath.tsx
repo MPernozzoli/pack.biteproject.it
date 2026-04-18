@@ -7,70 +7,87 @@ export const ChoosePath = () => {
   const ref2 = useReveal<HTMLAnchorElement>();
 
   return (
-    <section className="py-24 md:py-32 border-t border-hairline bg-surface-elevated/40">
+    <section className="page-section pt-8 md:pt-10">
       <div className="container-editorial">
-        <div className="text-center mb-16">
-          <div className="label-eyebrow mb-5">Choose your path</div>
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-offwhite leading-[1.05]">
-            How can we work together?
+        <div className="mb-14 text-center">
+          <span className="glass-chip-bronze mb-5 inline-flex items-center gap-2 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.26em] text-cream">
+            <span className="h-1.5 w-1.5 rounded-full bg-charcoal/70" />
+            Start here
+          </span>
+          <h2 className="mx-auto max-w-4xl font-serif text-4xl leading-[1.05] tracking-tight text-cream md:text-5xl lg:text-6xl">
+            Where would you like to begin?
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
           <a
             ref={ref1}
             href="#brands"
-            className="reveal group relative overflow-hidden aspect-[4/5] md:aspect-[5/6] block"
+            className="reveal group block overflow-hidden rounded-[34px]"
           >
-            <img
-              src={duoPhotos.sunsetBoat}
-              alt="Brands collaboration context"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-            <div className="absolute inset-0 p-8 md:p-10 lg:p-12 flex flex-col justify-end">
-              <div className="label-eyebrow text-bronze mb-4">For Brands</div>
-              <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-offwhite leading-tight mb-4">
-                Sponsorships, content, ambassador programs.
-              </h3>
-              <p className="text-sm text-muted-foreground max-w-md mb-6">
-                Brand collaborations across pet, travel, outdoor, and lifestyle
-                categories — built around authentic storytelling.
-              </p>
-              <span className="inline-flex items-center gap-2 text-offwhite text-[12px] uppercase tracking-[0.2em]">
-                Brand media kit
-                <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </span>
+            <div className="glass-frame rounded-[34px] p-2 transition-shadow duration-500 group-hover:shadow-[0_0_0_1px_rgba(214,184,156,0.35),0_28px_70px_-24px_rgba(139,94,60,0.35)]">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[5/6]">
+                <img
+                  src={duoPhotos.sunsetBoat}
+                  alt="Godot and Freyja on deck at dusk"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.04]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/45 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10 lg:p-12">
+                  <div className="label-eyebrow mb-3 text-bronze">Brands</div>
+                  <h3 className="mb-3 font-serif text-3xl leading-tight text-cream md:text-4xl lg:text-5xl">
+                    Partnerships built for quiet frames, not loud captions.
+                  </h3>
+                  <p className="mb-6 max-w-md font-sans text-sm leading-relaxed text-cream/70">
+                    Reels, carousels, ambassador arcs — delivered with the same handler who knows how
+                    each dog reads fatigue.
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-sans text-[12px] font-semibold uppercase tracking-[0.2em] text-cream">
+                    Open the brand lane
+                    <ArrowUpRight
+                      size={16}
+                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </span>
+                </div>
+              </div>
             </div>
           </a>
 
           <a
             ref={ref2}
             href="#casting"
-            className="reveal group relative overflow-hidden aspect-[4/5] md:aspect-[5/6] block"
-            style={{ transitionDelay: "120ms" }}
+            className="reveal group block overflow-hidden rounded-[34px]"
+            style={{ transitionDelay: "100ms" }}
           >
-            <img
-              src={duoPhotos.studioTight}
-              alt="Casting and production context"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
-            <div className="absolute inset-0 p-8 md:p-10 lg:p-12 flex flex-col justify-end">
-              <div className="label-eyebrow text-bronze mb-4">For Agencies &amp; Casting</div>
-              <h3 className="font-serif text-3xl md:text-4xl lg:text-5xl text-offwhite leading-tight mb-4">
-                Casting profile for productions and editorial.
-              </h3>
-              <p className="text-sm text-muted-foreground max-w-md mb-6">
-                A polished casting sheet with temperament, set readiness, and
-                travel availability for productions of any scale.
-              </p>
-              <span className="inline-flex items-center gap-2 text-offwhite text-[12px] uppercase tracking-[0.2em]">
-                Casting profile
-                <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </span>
+            <div className="glass-frame rounded-[34px] p-2 transition-shadow duration-500 group-hover:shadow-[0_0_0_1px_rgba(214,184,156,0.35),0_28px_70px_-24px_rgba(139,94,60,0.35)]">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] md:aspect-[5/6]">
+                <img
+                  src={duoPhotos.studioTight}
+                  alt="Godot and Freyja studio portrait"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.04]"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/45 to-transparent" />
+                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10 lg:p-12">
+                  <div className="label-eyebrow mb-3 text-bronze">Casting</div>
+                  <h3 className="mb-3 font-serif text-3xl leading-tight text-cream md:text-4xl lg:text-5xl">
+                    For call sheets that cannot afford chaos.
+                  </h3>
+                  <p className="mb-6 max-w-md font-sans text-sm leading-relaxed text-cream/70">
+                    Temperament notes, travel paperwork, and the small rituals that keep large dogs
+                    predictable when the clock is running.
+                  </p>
+                  <span className="inline-flex items-center gap-2 font-sans text-[12px] font-semibold uppercase tracking-[0.2em] text-cream">
+                    Open the casting lane
+                    <ArrowUpRight
+                      size={16}
+                      className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </span>
+                </div>
+              </div>
             </div>
           </a>
         </div>

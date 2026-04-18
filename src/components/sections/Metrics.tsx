@@ -42,7 +42,7 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
           }
         });
       },
-      { threshold: 0.4 },
+      { threshold: 0.35 },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -52,7 +52,10 @@ const Counter = ({ value, suffix }: { value: number; suffix: string }) => {
   const formatted = isFloat ? display.toFixed(1) : formatNumber(Math.round(display));
 
   return (
-    <span ref={ref} className="font-serif text-5xl md:text-6xl lg:text-7xl text-offwhite tabular-nums">
+    <span
+      ref={ref}
+      className="metric-shimmer font-serif text-5xl tabular-nums text-cream md:text-6xl lg:text-7xl"
+    >
       {formatted}
       <span className="text-bronze">{suffix}</span>
     </span>
@@ -74,8 +77,8 @@ const MetricCard = ({
   return (
     <div
       ref={ref}
-      className="reveal p-8 lg:p-10 border-t border-l border-hairline first:border-l lg:[&:nth-child(3n+1)]:border-l"
-      style={{ transitionDelay: `${index * 60}ms` }}
+      className="reveal rounded-[24px] border border-cream/10 bg-cream/[0.04] p-8 lg:p-10"
+      style={{ transitionDelay: `${index * 55}ms` }}
     >
       <div className="label-eyebrow mb-6">{label}</div>
       <Counter value={value} suffix={suffix} />
@@ -84,14 +87,14 @@ const MetricCard = ({
 };
 
 const BarRow = ({ label, value }: { label: string; value: number }) => (
-  <div className="py-4 border-t border-hairline">
-    <div className="flex justify-between items-baseline mb-2">
-      <span className="text-sm text-offwhite/90">{label}</span>
+  <div className="border-t border-cream/10 py-4 first:border-t-0 first:pt-0">
+    <div className="mb-2 flex items-baseline justify-between">
+      <span className="font-sans text-sm text-cream/90">{label}</span>
       <span className="label-eyebrow text-bronze">{value}%</span>
     </div>
-    <div className="h-px bg-hairline overflow-hidden">
+    <div className="h-1 overflow-hidden rounded-full bg-cream/10">
       <div
-        className="h-full bg-bronze transition-all duration-[1500ms] ease-out"
+        className="h-full rounded-full bg-gradient-to-r from-bronze to-bronze-deep transition-all duration-700 ease-out"
         style={{ width: `${value}%` }}
       />
     </div>
@@ -138,7 +141,7 @@ export const Metrics = () => {
         if (data?.audienceBreakdown?.length) setLiveAudienceBreakdown(data.audienceBreakdown);
         if (data?.updatedAt) setUpdatedAt(data.updatedAt);
       } catch (error) {
-        console.warn("Unable to refresh NJA metrics. Falling back to embedded snapshot.", error);
+        console.warn("Unable to refresh metrics. Using embedded snapshot.", error);
       }
     };
 
@@ -150,69 +153,71 @@ export const Metrics = () => {
   const displayedAudienceBreakdown = liveAudienceBreakdown ?? languages;
 
   return (
-    <section id="metrics" className="py-24 md:py-32 border-t border-hairline">
+    <section id="metrics" className="page-section pt-8 md:pt-10">
       <div className="container-editorial">
-        <SectionHeader
-          eyebrow="Metrics & audience"
-          title="Performance, audience, and reach."
-          description={`A public-facing performance snapshot for @${instagramProfile.handle}, refreshed at most once every ${publicMetricsMethodology.refreshWindow}. The published figures reflect data originating from Meta/Facebook APIs and are not manually editable from this site.`}
-        />
+        <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+          <SectionHeader
+            eyebrow="Reach"
+            title="What the numbers actually say."
+            description={`Public snapshot for @${instagramProfile.handle}, refreshed at most once every ${publicMetricsMethodology.refreshWindow}. Figures come from Meta APIs via ${publicMetricsMethodology.sourceLabel} — not edited by hand on this page.`}
+          />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-12 border-r border-b border-hairline">
-          {displayedMetrics.map((m, i) => (
-            <MetricCard key={m.label} {...m} index={i} />
-          ))}
-        </div>
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {displayedMetrics.map((m, i) => (
+              <MetricCard key={m.label} {...m} index={i} />
+            ))}
+          </div>
 
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 mt-16">
-          <div>
-            <div className="label-eyebrow text-bronze mb-5">Audience · Top countries</div>
-            <h3 className="font-serif text-2xl md:text-3xl text-offwhite mb-2">
-              Geographic distribution
-            </h3>
-            <div className="mt-6">
-              {displayedCountries.map((c) => (
-                <BarRow key={c.label} {...c} />
-              ))}
-              <div className="border-t border-hairline" />
+          <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="glass-panel-soft rounded-[28px] p-6 md:p-8">
+              <div className="label-eyebrow mb-3 text-bronze">Audience · countries</div>
+              <h3 className="mb-2 font-serif text-2xl text-cream md:text-3xl">Where the saves come from</h3>
+              <div className="mt-6">
+                {displayedCountries.map((c) => (
+                  <BarRow key={c.label} {...c} />
+                ))}
+              </div>
+            </div>
+            <div className="glass-panel-soft rounded-[28px] p-6 md:p-8">
+              <div className="label-eyebrow mb-3 text-bronze">Audience · split</div>
+              <h3 className="mb-2 font-serif text-2xl text-cream md:text-3xl">Who watches</h3>
+              <div className="mt-6">
+                {displayedAudienceBreakdown.map((l) => (
+                  <BarRow key={l.label} {...l} />
+                ))}
+              </div>
             </div>
           </div>
-          <div>
-            <div className="label-eyebrow text-bronze mb-5">Audience · Breakdown</div>
-            <h3 className="font-serif text-2xl md:text-3xl text-offwhite mb-2">
-              Gender split
-            </h3>
-            <div className="mt-6">
-              {displayedAudienceBreakdown.map((l) => (
-                <BarRow key={l.label} {...l} />
-              ))}
-              <div className="border-t border-hairline" />
-            </div>
-          </div>
-        </div>
 
-        <div className="mt-20">
-          <div className="flex items-end justify-between mb-6">
-            <div>
-              <div className="label-eyebrow text-bronze mb-2">Top performing content</div>
-              <h3 className="font-serif text-2xl md:text-3xl text-offwhite">Recent highlights</h3>
+          <div className="mt-14">
+            <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="label-eyebrow mb-2 text-bronze">Highlights</div>
+                <h3 className="font-serif text-2xl text-cream md:text-3xl">Top posts live in the kit</h3>
+              </div>
+              <span className="hidden font-sans text-xs text-muted-foreground md:block">
+                Updated {new Date(updatedAt).toLocaleDateString("en-GB")}
+              </span>
             </div>
-            <span className="hidden md:block text-xs text-muted-foreground">
-              Refreshed {new Date(updatedAt).toLocaleDateString("it-IT")}
-            </span>
-          </div>
-          <div className="border border-hairline p-6 text-sm text-muted-foreground">
-            Recent highlights are available in the full public media kit. We do not mirror media cards here unless they are explicitly exposed in a stable public source.
-          </div>
-          <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <p className="text-xs text-muted-foreground max-w-3xl">
-              Public estimate methodology: average likes, comments, and engagement rate are calculated from the latest {publicMetricsMethodology.sampledPostCount} public posts, excluding the most recent post. Audience geography and gender split reflect data originating from Meta/Facebook APIs. The surfaced numbers are not manually overrideable on this website.
-            </p>
-            <Button asChild className="rounded-none uppercase tracking-[0.18em] text-[11px] px-6">
-              <a href={instagramProfile.mediaKitUrl} target="_blank" rel="noopener noreferrer">
-                Apri il media kit completo
-              </a>
-            </Button>
+            <div className="glass-panel-soft rounded-[28px] p-6 font-sans text-sm leading-relaxed text-muted-foreground md:p-8">
+              Full cards, saves, and watch-through notes stay in the public media kit — this page
+              only mirrors the headline metrics so nothing drifts out of date here.
+            </div>
+            <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+              <p className="max-w-3xl font-sans text-xs leading-relaxed text-muted-foreground">
+                Method: averages use the latest {publicMetricsMethodology.sampledPostCount} public posts,
+                excluding the most recent. Geography and gender splits follow Meta reporting. Nothing
+                below can be manually overridden from this site.
+              </p>
+              <Button
+                asChild
+                className="h-12 rounded-full border border-cream/15 bg-cream/[0.08] px-6 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-cream hover:bg-cream/[0.12]"
+              >
+                <a href={instagramProfile.mediaKitUrl} target="_blank" rel="noopener noreferrer">
+                  Open full media kit
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

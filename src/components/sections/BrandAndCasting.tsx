@@ -8,7 +8,7 @@ interface Sub {
 }
 
 const SubGrid = ({ items }: { items: Sub[] }) => (
-  <div className="grid sm:grid-cols-2 gap-px bg-hairline mt-12 border border-hairline">
+  <div className="mt-12 grid gap-4 sm:grid-cols-2">
     {items.map((s, i) => (
       <SubCard key={s.title} {...s} index={i} />
     ))}
@@ -20,38 +20,42 @@ const SubCard = ({ title, body, index }: Sub & { index: number }) => {
   return (
     <div
       ref={ref}
-      className="reveal bg-background p-8 lg:p-10"
-      style={{ transitionDelay: `${index * 80}ms` }}
+      className="reveal rounded-[24px] border border-cream/10 bg-cream/[0.04] p-8 transition-all duration-500 hover:border-bronze/25 lg:p-10"
+      style={{ transitionDelay: `${index * 70}ms` }}
     >
-      <div className="label-eyebrow text-bronze mb-4">0{index + 1}</div>
-      <h4 className="font-serif text-2xl text-offwhite mb-3">{title}</h4>
-      <p className="text-sm text-muted-foreground leading-relaxed">{body}</p>
+      <div className="font-serif text-2xl text-bronze/95">0{index + 1}</div>
+      <h4 className="mb-3 mt-4 font-serif text-2xl text-cream">{title}</h4>
+      <p className="font-sans text-sm leading-relaxed text-muted-foreground">{body}</p>
     </div>
   );
 };
 
 export const BrandKit = () => (
-  <section id="brands" className="py-24 md:py-32 border-t border-hairline">
+  <section id="brands" className="page-section pt-8 md:pt-10">
     <div className="container-editorial">
-      <SectionHeader
-        eyebrow="Brand media kit"
-        title="A distinctive visual identity for premium partnerships."
-        description="Godot and Freyja offer authentic lifestyle storytelling and a refined aesthetic suited to pet, travel, outdoor, and lifestyle brands seeking standout creative."
-      />
-      <SubGrid items={brandSubsections} />
+      <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+        <SectionHeader
+          eyebrow="Brand lane"
+          title="For brands that want presence without performance."
+          description="Pet gear, travel, outdoor, hospitality — anywhere a large dog can carry the frame without stealing it. The work stays grounded in how they actually live."
+        />
+        <SubGrid items={brandSubsections} />
+      </div>
     </div>
   </section>
 );
 
 export const CastingProfile = () => (
-  <section id="casting" className="py-24 md:py-32 border-t border-hairline bg-surface-elevated/40">
+  <section id="casting" className="page-section pt-4 md:pt-6">
     <div className="container-editorial">
-      <SectionHeader
-        eyebrow="Casting / agency profile"
-        title="Production-ready talent with composed temperament."
-        description="Available for selected productions, editorial shoots, branded campaigns, and visual storytelling projects, with a strong focus on temperament, presence, and professional presentation."
-      />
-      <SubGrid items={castingSubsections} />
+      <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+        <SectionHeader
+          eyebrow="Casting lane"
+          title="For productions that need calm when the red light is on."
+          description="Lights, booms, long holds — both dogs have been walked through the boring parts of set life until it feels routine, not theatrical."
+        />
+        <SubGrid items={castingSubsections} />
+      </div>
     </div>
   </section>
 );

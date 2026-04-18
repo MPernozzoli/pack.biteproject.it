@@ -1,61 +1,84 @@
-import { ArrowDown, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { duoPhotos } from "@/data/photos";
 
 export const Hero = () => {
   return (
     <section
       id="top"
-      className="relative min-h-screen w-full overflow-hidden flex items-end pt-24 pb-16 md:pb-24"
+      className="relative flex min-h-screen w-full items-end overflow-hidden pt-24 pb-20 md:pb-28"
     >
       <img
         src={duoPhotos.sunsetBoat}
-        alt="Godot the American Akita and Freyja the Alaskan Malamute portrait"
-        className="absolute inset-0 w-full h-full object-cover animate-slow-zoom"
+        alt="Godot the American Akita and Freyja the Alaskan Malamute aboard at dusk"
+        className="absolute inset-0 h-full w-full object-cover animate-slow-zoom"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/30 to-background" />
-      <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-transparent" />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(31,31,31,0.35),transparent_55%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/50 via-background/25 to-background"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/75 via-transparent to-transparent"
+        aria-hidden
+      />
+      <svg className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.07]" aria-hidden>
+        <filter id="grain">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain)" />
+      </svg>
 
-      <div className="container-editorial relative z-10">
-        <div className="max-w-4xl">
-          <div className="label-eyebrow text-bronze mb-6 animate-fade-up">
-            Dog Talent · Media Kit · Casting Profile
+      <div className="container-editorial relative z-10 w-full">
+        <div className="max-w-4xl pb-8 md:pb-12">
+          <div className="mb-6 animate-fade-up">
+            <span className="glass-chip-bronze inline-flex items-center gap-2 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.26em] text-cream">
+              <span className="h-1.5 w-1.5 rounded-full bg-charcoal/80" />
+              American Akita &amp; Alaskan Malamute · Italy
+            </span>
           </div>
-          <h1 className="font-serif text-[15vw] md:text-[8.5vw] lg:text-[7.5rem] leading-[0.92] text-offwhite animate-fade-up [animation-delay:120ms]">
+          <h1 className="animate-fade-up font-serif text-[clamp(2.75rem,12vw,7.5rem)] leading-[0.92] tracking-tight text-cream [animation-delay:100ms]">
             Godot
-            <span className="italic text-muted-foreground/90"> &amp; </span>
+            <span className="mx-1 italic text-bronze"> &amp; </span>
             Freyja
           </h1>
-          <p className="mt-8 max-w-2xl text-lg md:text-xl text-offwhite/85 leading-relaxed animate-fade-up [animation-delay:240ms]">
-            Dog talent portfolio, media kit, and partnership deck for premium campaigns,
-            branded content, and casting opportunities.
+          <p className="mt-8 max-w-2xl animate-fade-up text-lg leading-relaxed text-cream/88 md:text-xl [animation-delay:200ms]">
+            Two large dogs raised between harbour light and city noise. They hold a mark, ignore
+            chatter, and read weather the way working animals do — which is why the camera rarely
+            has to lie.
           </p>
-          <p className="mt-3 max-w-2xl text-sm md:text-base text-muted-foreground animate-fade-up [animation-delay:320ms]">
-            American Akita and Alaskan Malamute. Available for campaigns,
-            productions, and collaborations across Europe and beyond.
+          <p className="mt-4 max-w-2xl animate-fade-up text-sm leading-relaxed text-muted-foreground md:text-base [animation-delay:280ms]">
+            Booked solo or as a pair, across Europe, with one handler on the day.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row gap-3 animate-fade-up [animation-delay:420ms]">
+          <div className="mt-10 flex animate-fade-up flex-col gap-3 sm:flex-row sm:items-center [animation-delay:380ms]">
             <a
               href="#brands"
-              className="group inline-flex items-center justify-between gap-6 bg-bronze text-primary-foreground h-14 px-7 text-[12px] uppercase tracking-[0.2em] font-medium hover:bg-bronze/90 transition-colors"
+              className="glass-button group inline-flex h-14 min-w-[200px] items-center justify-center gap-3 px-8"
             >
-              For Brands
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              For brands
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
               href="#casting"
-              className="group inline-flex items-center justify-between gap-6 border border-offwhite/40 text-offwhite h-14 px-7 text-[12px] uppercase tracking-[0.2em] font-medium hover:bg-offwhite/10 transition-colors"
+              className="glass-button-ghost group inline-flex h-14 min-w-[220px] items-center justify-center gap-3 px-8"
             >
-              For Casting / Agencies
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              For casting
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
         </div>
 
-        <div className="absolute bottom-0 right-6 md:right-10 lg:right-16 hidden md:flex flex-col items-center gap-3 text-muted-foreground animate-fade-up [animation-delay:600ms]">
-          <span className="label-eyebrow [writing-mode:vertical-rl]">Scroll</span>
-          <ArrowDown size={14} className="animate-pulse" />
+        <div className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 md:flex">
+          <div className="hero-scroll-cue animate-fade-up [animation-delay:500ms]">
+            <span className="hero-scroll-cue__label">Scroll</span>
+            <span className="hero-scroll-cue__line" aria-hidden>
+              <span className="hero-scroll-cue__dot" />
+            </span>
+          </div>
         </div>
       </div>
     </section>

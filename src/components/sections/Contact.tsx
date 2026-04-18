@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Mail, Instagram, MessageCircle, MapPin, ArrowRight } from "lucide-react";
+import { ArrowRight, Instagram, Mail, MapPin, MessageCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -17,11 +17,11 @@ import { toast } from "@/hooks/use-toast";
 import { instagramProfile } from "@/data/site";
 
 const inquirySchema = z.object({
-  name: z.string().trim().min(2, "Please enter your name").max(100),
+  name: z.string().trim().min(2, "Add a name we can use on the call sheet").max(100),
   company: z.string().trim().max(120).optional().or(z.literal("")),
-  email: z.string().trim().email("Please enter a valid email").max(255),
-  inquiry: z.string().min(1, "Please select an inquiry type"),
-  details: z.string().trim().min(10, "Please add a few words about your project").max(1500),
+  email: z.string().trim().email("Use a working email").max(255),
+  inquiry: z.string().min(1, "Pick a lane"),
+  details: z.string().trim().min(10, "A few concrete lines help").max(1500),
   timeline: z.string().trim().max(120).optional().or(z.literal("")),
   budget: z.string().trim().max(120).optional().or(z.literal("")),
 });
@@ -29,13 +29,16 @@ const inquirySchema = z.object({
 type InquiryValues = z.infer<typeof inquirySchema>;
 
 const inquiryTypes = [
-  "Brand Collaboration",
-  "Sponsored Content",
-  "Casting / Production",
-  "Modeling / Editorial",
-  "Ambassador Program",
+  "Brand collaboration",
+  "Sponsored content",
+  "Casting / production",
+  "Editorial / stills",
+  "Ambassador arc",
   "Other",
 ];
+
+const inputInner =
+  "h-11 border-0 bg-transparent px-4 text-sm text-cream placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:ring-offset-0";
 
 export const Contact = () => {
   const {
@@ -47,7 +50,15 @@ export const Contact = () => {
     formState: { errors, isSubmitting },
   } = useForm<InquiryValues>({
     resolver: zodResolver(inquirySchema),
-    defaultValues: { name: "", company: "", email: "", inquiry: "", details: "", timeline: "", budget: "" },
+    defaultValues: {
+      name: "",
+      company: "",
+      email: "",
+      inquiry: "",
+      details: "",
+      timeline: "",
+      budget: "",
+    },
   });
 
   const inquiryValue = watch("inquiry");
@@ -55,110 +66,183 @@ export const Contact = () => {
   const onSubmit = async (values: InquiryValues) => {
     await new Promise((r) => setTimeout(r, 600));
     toast({
-      title: "Inquiry received",
-      description: `Thanks ${values.name}. We will reply within 48 hours.`,
+      title: "Inquiry logged",
+      description: `Thanks, ${values.name}. Expect a reply within two working days.`,
     });
     reset();
   };
 
   return (
-    <section id="contact" className="py-24 md:py-32 border-t border-hairline">
+    <section id="contact" className="page-section pt-6 md:pt-8 pb-16 md:pb-24">
       <div className="container-editorial">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              eyebrow="Contact"
-              title="Let's collaborate."
-              description="For collaborations, casting opportunities, productions, and partnership inquiries, please get in touch."
-            />
-
-            <div className="mt-12 space-y-1">
-              <ContactRow icon={<Mail size={16} />} label="Email" value="hello@biteproject.it" href="mailto:hello@biteproject.it" />
-              <ContactRow
-                icon={<Instagram size={16} />}
-                label="Instagram"
-                value={`@${instagramProfile.handle}`}
-                href={instagramProfile.url}
+        <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-5">
+              <SectionHeader
+                eyebrow="Contact"
+                title="Talk to the handler."
+                description="Casting decks, rate questions, odd locations — send it here. No third-party inbox, no junior account forwarding into the void."
               />
-              <ContactRow icon={<MessageCircle size={16} />} label="WhatsApp" value="Message us directly" href="https://wa.me/00000000000" />
-              <ContactRow icon={<MapPin size={16} />} label="Based in" value="Italy — available worldwide" />
+
+              <div className="mt-12 space-y-2">
+                <ContactRow
+                  icon={<Mail size={16} />}
+                  label="Email"
+                  value="hello@biteproject.it"
+                  href="mailto:hello@biteproject.it"
+                />
+                <ContactRow
+                  icon={<Instagram size={16} />}
+                  label="Instagram"
+                  value={`@${instagramProfile.handle}`}
+                  href={instagramProfile.url}
+                />
+                <ContactRow
+                  icon={<MessageCircle size={16} />}
+                  label="WhatsApp"
+                  value="Message the boat phone"
+                  href="https://wa.me/00000000000"
+                />
+                <ContactRow
+                  icon={<MapPin size={16} />}
+                  label="Based"
+                  value="Italy — travel by arrangement"
+                />
+              </div>
             </div>
+
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 lg:col-span-7">
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Field label="Name" error={errors.name?.message}>
+                  <div className="glass-input">
+                    <Input {...register("name")} placeholder="Name on the call sheet" className={inputInner} />
+                  </div>
+                </Field>
+                <Field label="Company / agency" error={errors.company?.message}>
+                  <div className="glass-input">
+                    <Input {...register("company")} placeholder="Optional" className={inputInner} />
+                  </div>
+                </Field>
+              </div>
+
+              <Field label="Email" error={errors.email?.message}>
+                <div className="glass-input">
+                  <Input
+                    {...register("email")}
+                    type="email"
+                    placeholder="you@company.com"
+                    className={inputInner}
+                  />
+                </div>
+              </Field>
+
+              <Field label="Inquiry type" error={errors.inquiry?.message}>
+                <div className="glass-input">
+                  <Select
+                    value={inquiryValue}
+                    onValueChange={(v) => setValue("inquiry", v, { shouldValidate: true })}
+                  >
+                    <SelectTrigger className={`${inputInner} h-11`}>
+                      <SelectValue placeholder="Choose one" />
+                    </SelectTrigger>
+                    <SelectContent className="border-cream/12 bg-charcoal/95 text-cream backdrop-blur-xl">
+                      {inquiryTypes.map((t) => (
+                        <SelectItem key={t} value={t}>
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </Field>
+
+              <Field label="Project notes" error={errors.details?.message}>
+                <div className="glass-input">
+                  <Textarea
+                    {...register("details")}
+                    rows={5}
+                    placeholder="Shoot dates, usage, deliverable shapes, references."
+                    className={`${inputInner} min-h-[140px] resize-none py-3`}
+                  />
+                </div>
+              </Field>
+
+              <div className="grid gap-6 sm:grid-cols-2">
+                <Field label="Timeline">
+                  <div className="glass-input">
+                    <Input {...register("timeline")} placeholder="e.g. late May" className={inputInner} />
+                  </div>
+                </Field>
+                <Field label="Budget band">
+                  <div className="glass-input">
+                    <Input {...register("budget")} placeholder="Optional" className={inputInner} />
+                  </div>
+                </Field>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="glass-button group mt-4 flex h-14 w-full items-center justify-center gap-3 sm:w-auto sm:min-w-[220px] sm:px-10 disabled:opacity-60"
+              >
+                {isSubmitting ? "Sending…" : "Send inquiry"}
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-0.5" />
+              </button>
+            </form>
           </div>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="lg:col-span-7 space-y-6">
-            <div className="grid sm:grid-cols-2 gap-6">
-              <Field label="Name" error={errors.name?.message}>
-                <Input {...register("name")} placeholder="Your name" className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus-visible:ring-0 focus-visible:border-bronze" />
-              </Field>
-              <Field label="Company / Agency" error={errors.company?.message}>
-                <Input {...register("company")} placeholder="Optional" className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus-visible:ring-0 focus-visible:border-bronze" />
-              </Field>
-            </div>
-
-            <Field label="Email" error={errors.email?.message}>
-              <Input {...register("email")} type="email" placeholder="you@company.com" className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus-visible:ring-0 focus-visible:border-bronze" />
-            </Field>
-
-            <Field label="Type of inquiry" error={errors.inquiry?.message}>
-              <Select value={inquiryValue} onValueChange={(v) => setValue("inquiry", v, { shouldValidate: true })}>
-                <SelectTrigger className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus:ring-0 focus:border-bronze">
-                  <SelectValue placeholder="Select an option" />
-                </SelectTrigger>
-                <SelectContent>
-                  {inquiryTypes.map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {t}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </Field>
-
-            <Field label="Project details" error={errors.details?.message}>
-              <Textarea {...register("details")} rows={5} placeholder="Tell us about the project, scope, and any references." className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus-visible:ring-0 focus-visible:border-bronze resize-none" />
-            </Field>
-
-            <div className="grid sm:grid-cols-2 gap-6">
-              <Field label="Timeline">
-                <Input {...register("timeline")} placeholder="e.g. Q2 2026" className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus-visible:ring-0 focus-visible:border-bronze" />
-              </Field>
-              <Field label="Budget range">
-                <Input {...register("budget")} placeholder="Optional" className="rounded-none border-x-0 border-t-0 border-b border-hairline bg-transparent px-0 focus-visible:ring-0 focus-visible:border-bronze" />
-              </Field>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="group inline-flex items-center justify-between gap-6 bg-bronze text-primary-foreground h-14 px-8 text-[12px] uppercase tracking-[0.2em] font-medium hover:bg-bronze/90 transition-colors disabled:opacity-60 mt-4"
-            >
-              {isSubmitting ? "Sending..." : "Send inquiry"}
-              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
-            </button>
-          </form>
         </div>
       </div>
     </section>
   );
 };
 
-const Field = ({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) => (
+const Field = ({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) => (
   <div className="space-y-2">
     <Label className="label-eyebrow">{label}</Label>
     {children}
-    {error && <p className="text-[12px] text-destructive">{error}</p>}
+    {error && <p className="font-sans text-[12px] text-destructive">{error}</p>}
   </div>
 );
 
-const ContactRow = ({ icon, label, value, href }: { icon: React.ReactNode; label: string; value: string; href?: string }) => {
-  const Inner = (
-    <div className="flex items-center justify-between py-5 border-t border-hairline group">
+const ContactRow = ({
+  icon,
+  label,
+  value,
+  href,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  href?: string;
+}) => {
+  const inner = (
+    <div className="glass-chip group flex cursor-default items-center justify-between rounded-2xl px-4 py-4 transition-colors hover:bg-cream/[0.06]">
       <div className="flex items-center gap-4">
         <span className="text-bronze">{icon}</span>
         <span className="label-eyebrow">{label}</span>
       </div>
-      <span className="text-offwhite group-hover:text-bronze transition-colors">{value}</span>
+      <span className="font-sans text-sm text-cream/90 transition-colors group-hover:text-bronze">
+        {value}
+      </span>
     </div>
   );
-  return href ? <a href={href} target="_blank" rel="noopener noreferrer">{Inner}</a> : Inner;
+  if (!href) return inner;
+  const external = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      className="block"
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {inner}
+    </a>
+  );
 };

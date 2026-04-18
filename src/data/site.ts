@@ -18,8 +18,6 @@ export const instagramProfile = {
   supabaseFunctionName: "instagram-metrics",
 };
 
-// TODO: Update `instagramProfile.handle`, `instagramProfile.url`, and `instagramProfile.mediaKitUrl` as soon as the Instagram rename is finalized.
-
 export const publicMetricsMethodology = {
   capturedAt: "2026-04-18",
   sampledPostCount: 12,
@@ -31,71 +29,81 @@ export const publicMetricsMethodology = {
 export const overviewCards = [
   {
     label: "01",
-    title: "Brand Collaborations",
-    body: "Sponsored content, ambassador programs, and long-form partnerships with premium brands.",
+    title: "Sponsored work",
+    body: "Reels and carousels where the product has to live in real rooms, real wind, and real tired dogs — not a rented loft with fake plants.",
   },
   {
     label: "02",
-    title: "Modeling & Casting",
-    body: "Available for editorial shoots, commercials, and branded productions through agencies.",
+    title: "Casting & production",
+    body: "Call sheets that need two large animals to arrive vaccinated, insured, and unbothered by a boom swinging overhead.",
   },
   {
     label: "03",
-    title: "Outdoor / Travel / Boat",
-    body: "An authentic adventure context, from coastal sailing to mountain trails and editorial road trips.",
+    title: "Outdoor & boat life",
+    body: "Salt air, wet decks, long shadows on the pontoon. They have already clocked more miles on water than most talent ever will.",
   },
   {
     label: "04",
-    title: "Individual & Duo",
-    body: "Bookable as solo talent or as a duo for stronger narrative and visual contrast.",
+    title: "Solo or together",
+    body: "Godot for gravity, Freyja for motion — or both when the story needs contrast without doubling the crew.",
+  },
+  {
+    label: "05",
+    title: "One handler",
+    body: "No rotating strangers with treats in their pockets. One voice on set keeps cues clean and the dogs honest.",
+  },
+  {
+    label: "06",
+    title: "Europe-first travel",
+    body: "Italy as home port, EU paperwork sorted, flights and ferries discussed like adults — not improvised the night before.",
   },
 ];
 
 export const brandSubsections = [
   {
-    title: "Brand Fit",
-    body: "Premium pet, outdoor, travel, lifestyle, automotive, and apparel brands seeking a distinctive, cinematic aesthetic.",
+    title: "Where they fit",
+    body: "Outdoor brands, slow travel, pet accessories with weight, hospitality that still believes in dogs in the lobby — anywhere the frame should feel lived-in.",
   },
   {
-    title: "Audience Snapshot",
-    body: "An engaged, design-aware audience with strong interest in travel, sailing, dog culture, and elevated lifestyle content.",
+    title: "Who watches",
+    body: "People who save boat tours they will never book, who buy expensive leashes, who argue about light in the comments. The audience skews toward design and weather, not tricks.",
   },
   {
-    title: "Content Style",
-    body: "Editorial framing, natural light, lived-in storytelling. No staged performances — real moments, refined execution.",
+    title: "How it looks",
+    body: "Natural light first, minimal staging, colour that follows the hour of day instead of a LUT someone found on sale.",
   },
   {
-    title: "Collaboration Options",
-    body: "Sponsored reels, story sets, carousels, UGC-style assets, ambassador agreements, and bespoke campaign shoots.",
+    title: "What ships",
+    body: "Vertical cuts, story stacks, stills for print, behind-the-scenes for the team chat — delivered with filenames that make editors less angry.",
   },
 ];
 
 export const castingSubsections = [
   {
-    title: "Set Suitability",
-    body: "Comfortable with lighting rigs, boom microphones, multiple crew members, and prolonged shoot days.",
+    title: "Temperament on the floor",
+    body: "Both dogs have been walked through the boring parts of set life — marks, resets, strangers walking past — until it reads as routine, not theatre.",
   },
   {
-    title: "Temperament & Handling",
-    body: "Composed, non-reactive, responsive to clear cues. Always handled by a dedicated, experienced owner-handler.",
+    title: "Handling",
+    body: "One experienced owner-handler on the day. Cues stay consistent, breaks stay honest, and nobody improvises a new command because the clock is loud.",
   },
   {
-    title: "Production Readiness",
-    body: "Full vaccination records, EU pet passports, microchipped, insured. Clean grooming presentation on call.",
+    title: "Paperwork",
+    body: "EU pet passports, vaccination history, insurance, grooming call before camera — the unglamorous stack that keeps production legal and calm.",
   },
   {
-    title: "Travel Availability",
-    body: "Available across Italy and Europe. Open to international productions with appropriate lead time.",
+    title: "Travel",
+    body: "Italy and the wider EU by default; further afield when the schedule and climate make sense for thick coats and long holds.",
   },
 ];
 
 export const metrics = [
-  { label: "Instagram Followers", value: 701, suffix: "" },
-  { label: "Avg. Reel Views", value: 1180, suffix: "" },
-  { label: "Avg. Likes / Post", value: 54, suffix: "" },
-  { label: "Avg. Comments / Post", value: 3, suffix: "" },
-  { label: "Engagement Rate", value: 8.3, suffix: "%" },
-  { label: "Posts Sampled", value: 12, suffix: "" },
+  { label: "Instagram followers", value: 701, suffix: "" },
+  { label: "Avg. reel views", value: 1180, suffix: "" },
+  { label: "Avg. likes / post", value: 54, suffix: "" },
+  { label: "Avg. comments / post", value: 3, suffix: "" },
+  { label: "Engagement rate", value: 8.3, suffix: "%" },
+  { label: "Posts sampled", value: 12, suffix: "" },
 ];
 
 export const topCountries = [
@@ -115,24 +123,24 @@ export const languages = [
 
 export const partnerships = [
   {
-    brand: "Concept Format",
-    type: "Marine Safety / Boat Lifestyle",
-    deliverables: "Hero stills · Reel cutdown · Story sequence",
-    outcome: "High-trust sailing imagery with authentic onboard context.",
+    brand: "Marine safety",
+    type: "Concept — life aboard",
+    deliverables: "Hero stills · vertical cut · story sequence",
+    outcome: "Imagery that treats the boat as workplace, not wallpaper.",
     image: freyjaPhotos.foodBoat,
   },
   {
-    brand: "Concept Format",
-    type: "Pet Accessories / Outdoor Apparel",
-    deliverables: "Carousel post · Product stills · UGC pack",
-    outcome: "Editorial product placement in real outdoor and city settings.",
+    brand: "Outdoor kit",
+    type: "Concept — gear in use",
+    deliverables: "Carousel · packshots on location · UGC pack",
+    outcome: "Product held by dogs that already live outside the studio walls.",
     image: godotPhotos.lifeJacket,
   },
   {
-    brand: "Concept Format",
-    type: "Travel / Hospitality / Family Adventure",
-    deliverables: "Campaign stills · Duo narrative set · Vertical cut",
-    outcome: "Warm duo storytelling with strong contrast between the two dogs.",
+    brand: "Travel & family",
+    type: "Concept — duo narrative",
+    deliverables: "Campaign stills · duo set · vertical cutdown",
+    outcome: "Two silhouettes, one scene — contrast without choreography.",
     image: duoPhotos.sunsetBoat,
   },
 ];
@@ -172,7 +180,7 @@ export const galleryItems = [
   { src: freyjaPhotos.couch, category: "Lifestyle", alt: "Freyja relaxed on the couch" },
   { src: freyjaPhotos.flowersClose, category: "Outdoor", alt: "Freyja among purple flowers" },
   { src: freyjaPhotos.seafront, category: "City", alt: "Freyja by the seafront" },
-  { src: freyjaPhotos.wetClose, category: "Water", alt: "Frejya wet and smiling in the water" },
+  { src: freyjaPhotos.wetClose, category: "Water", alt: "Freyja wet and smiling in the water" },
   { src: freyjaPhotos.park, category: "Outdoor", alt: "Freyja in the countryside with a red bandana" },
   { src: freyjaPhotos.cityPortrait, category: "City", alt: "Freyja in Piazza Liberty" },
   { src: freyjaPhotos.flowersField, category: "Outdoor", alt: "Freyja in a field with dandelions" },
@@ -196,31 +204,31 @@ export const galleryCategories = [
 ] as const;
 
 export const services = [
-  { title: "Sponsored Reels", body: "Concept, shoot, edit, and delivery in vertical format." },
-  { title: "Stories & Story Sets", body: "Serialized story arcs designed for native engagement." },
-  { title: "Carousel Posts", body: "Editorial multi-image posts with consistent visual language." },
-  { title: "UGC-Style Content", body: "Authentic, unpolished assets for brand reuse." },
-  { title: "Product Features", body: "Premium product placement in lived-in context." },
-  { title: "Lifestyle Campaigns", body: "Full-day shoots with art direction and styling support." },
-  { title: "Dog Modeling", body: "Modeling for commercials, editorial, and brand campaigns." },
-  { title: "Duo Shoots", body: "Two-dog narrative content with strong visual contrast." },
-  { title: "Travel & Boat Settings", body: "Shoots aboard sailing yachts and on coastal locations." },
-  { title: "Custom Partnerships", body: "Bespoke long-form collaborations and ambassador roles." },
+  { title: "Sponsored reels", body: "Concept through colour grade — vertical first, sound designed for phones, not cinema speakers." },
+  { title: "Story arcs", body: "Serialized stories with a beginning and an end, instead of five random frames and a sticker." },
+  { title: "Carousels", body: "Editorial pacing for people who still swipe slowly and read captions." },
+  { title: "UGC packs", body: "Looser cuts meant for brand-owned channels — handheld, honest, slightly imperfect on purpose." },
+  { title: "Product in scene", body: "Gear shown where it actually gets used: salt, mud, hotel carpet, boat fibreglass." },
+  { title: "Campaign days", body: "Full-day shoots with one handler, scheduled breaks, and a shot list that respects thick coats in heat." },
+  { title: "Still modelling", body: "Editorial and commercial stills with marks that make sense for dogs who do not do ballet." },
+  { title: "Duo days", body: "Two dogs, one schedule — built for wardrobe changes and light that has to turn together." },
+  { title: "Travel & boat", body: "Location work on docks, decks, and roads — logistics discussed before anyone packs a drone." },
+  { title: "Custom retainers", body: "Longer arcs for brands that want season-long coherence instead of one-off posts." },
 ];
 
 export const whyPoints = [
-  { title: "Distinctive Visual Identity", body: "Two large-breed dogs with strong silhouettes and natural screen presence." },
-  { title: "Authentic Lifestyle", body: "Real travel, sailing, and outdoor context — not staged generic content." },
-  { title: "Cinematic Quality", body: "Every frame is treated as part of a campaign, not a casual feed post." },
-  { title: "Individual & Duo", body: "Solo talent cards or duo storytelling — two formats from one production." },
-  { title: "Production-Ready", body: "Vaccinated, insured, passport-equipped, and handled by an experienced owner." },
-  { title: "Brand-Safe", body: "Composed temperament, professional handling, no surprises on set." },
+  { title: "Silhouette", body: "Two large northern breeds read instantly on a small screen — no explaining the breed in the caption." },
+  { title: "Real context", body: "Harbour mornings and apartment evenings are already their default; the camera rarely has to invent a life." },
+  { title: "Discipline", body: "Marks, waits, and resets are rehearsed like a craft, not performed like a trick for treats." },
+  { title: "Modular booking", body: "Solo days when the script calls for one dog, duo days when contrast carries the scene." },
+  { title: "Production hygiene", body: "Paperwork, insurance, grooming windows — handled before the van arrives, not during lunch." },
+  { title: "Quiet sets", body: "Temperament that does not need chaos to look interesting — useful when the sound department is already tired." },
 ];
 
 export const pressKitItems = [
-  { title: "Media Kit", body: "Full PDF overview for brands.", action: "Download Media Kit" },
-  { title: "Casting Sheet", body: "Talent profile for agencies.", action: "Download Casting Sheet" },
-  { title: "Rate Card", body: "Pricing on request.", action: "Request Rate Card" },
-  { title: "Full Metrics", body: "Detailed performance data.", action: "Request Metrics" },
-  { title: "Portfolio Deck", body: "Selected work and concepts.", action: "Request Portfolio" },
+  { title: "Media kit", body: "PDF overview for brands — rates on request inside.", action: "Request media kit" },
+  { title: "Casting sheet", body: "Measurements, temperament, travel — formatted for agents.", action: "Request casting sheet" },
+  { title: "Rate card", body: "Numbers for budgets that already cleared legal.", action: "Request rate card" },
+  { title: "Metrics deck", body: "Followers, saves, geography — refreshed on a fixed cadence.", action: "Request metrics" },
+  { title: "Portfolio deck", body: "Selected stills and treatments from recent seasons.", action: "Request portfolio" },
 ];
