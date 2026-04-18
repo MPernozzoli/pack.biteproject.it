@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { instagramProfile, languages, metrics as fallbackMetrics, topCountries } from "@/data/site";
+import {
+  instagramProfile,
+  languages,
+  metrics as fallbackMetrics,
+  publicMetricsMethodology,
+  topCountries,
+} from "@/data/site";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useReveal } from "@/hooks/use-reveal";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { duoPhotos, freyjaPhotos, godotPhotos } from "@/data/photos";
 
@@ -105,75 +112,50 @@ type MetricItem = {
   suffix: string;
 };
 
+type AudienceItem = {
+  label: string;
+  value: number;
+};
+
 type SocialMetricsResponse = {
   metrics?: MetricItem[];
+  topCountries?: AudienceItem[];
+  audienceBreakdown?: AudienceItem[];
   updatedAt?: string;
+  mediaKitUrl?: string;
+  source?: string;
 };
 
 export const Metrics = () => {
   const [liveMetrics, setLiveMetrics] = useState<MetricItem[] | null>(null);
-  const [liveUpdatedAt, setLiveUpdatedAt] = useState<string | null>(null);
+  const [liveCountries, setLiveCountries] = useState<AudienceItem[] | null>(null);
+  const [liveAudienceBreakdown, setLiveAudienceBreakdown] = useState<AudienceItem[] | null>(null);
+  const [updatedAt, setUpdatedAt] = useState(publicMetricsMethodology.capturedAt);
 
   useEffect(() => {
-    const controller = new AbortController();
-
-    const applyPayload = (payload: SocialMetricsResponse | null | undefined) => {
-      if (!payload?.metrics?.length) return false;
-
-      setLiveMetrics(payload.metrics);
-      setLiveUpdatedAt(payload.updatedAt ?? null);
-      return true;
-    };
-
-    const loadFromSupabase = async () => {
+    const loadMetrics = async () => {
       try {
         const { data, error } = await supabase.functions.invoke<SocialMetricsResponse>(
           instagramProfile.supabaseFunctionName,
-          {
-            body: { handle: instagramProfile.handle },
-          },
+          { body: { slug: instagramProfile.handle, mediaKitUrl: instagramProfile.mediaKitUrl } },
         );
 
         if (error) throw error;
-        return applyPayload(data);
+        if (data?.metrics?.length) setLiveMetrics(data.metrics);
+        if (data?.topCountries?.length) setLiveCountries(data.topCountries);
+        if (data?.audienceBreakdown?.length) setLiveAudienceBreakdown(data.audienceBreakdown);
+        if (data?.updatedAt) setUpdatedAt(data.updatedAt);
       } catch (error) {
-        console.warn("Unable to load live social metrics from Supabase. Falling back to other sources.", error);
-        return false;
+        console.warn("Unable to refresh NJA metrics. Falling back to embedded snapshot.", error);
       }
-    };
-
-    const loadFromEndpoint = async () => {
-      if (!instagramProfile.metricsEndpoint) return false;
-
-      try {
-        const url = new URL(instagramProfile.metricsEndpoint, window.location.origin);
-        url.searchParams.set("handle", instagramProfile.handle);
-
-        const response = await fetch(url.toString(), { signal: controller.signal });
-        if (!response.ok) throw new Error(`Metrics request failed with ${response.status}`);
-
-        const payload = (await response.json()) as SocialMetricsResponse;
-        return applyPayload(payload);
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-        console.warn("Unable to load live social metrics. Falling back to static snapshot.", error);
-        return false;
-      }
-    };
-
-    const loadMetrics = async () => {
-      const loadedFromSupabase = await loadFromSupabase();
-      if (loadedFromSupabase) return;
-      await loadFromEndpoint();
     };
 
     void loadMetrics();
-
-    return () => controller.abort();
   }, []);
 
-  const metrics = liveMetrics ?? fallbackMetrics;
-  const isLive = Boolean(liveMetrics);
+  const displayedMetrics = liveMetrics ?? fallbackMetrics;
+  const displayedCountries = liveCountries ?? topCountries;
+  const displayedAudienceBreakdown = liveAudienceBreakdown ?? languages;
 
   return (
     <section id="metrics" className="py-24 md:py-32 border-t border-hairline">
@@ -181,15 +163,11 @@ export const Metrics = () => {
         <SectionHeader
           eyebrow="Metrics & audience"
           title="Performance, audience, and reach."
-          description={`A snapshot of social performance and audience composition for @${instagramProfile.handle}. ${
-            isLive
-              ? "The headline numbers below are synced from a connected metrics endpoint."
-              : "The headline numbers below are currently a curated snapshot until the live Instagram integration is connected."
-          }`}
+          description={`A public-facing performance snapshot for @${instagramProfile.handle}, refreshed from ${publicMetricsMethodology.sourceLabel} at most once every ${publicMetricsMethodology.refreshWindow}. The published figures reflect data sourced from Meta/Facebook APIs via the public media kit and are not manually editable from this site.`}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-12 border-r border-b border-hairline">
-          {metrics.map((m, i) => (
+          {displayedMetrics.map((m, i) => (
             <MetricCard key={m.label} {...m} index={i} />
           ))}
         </div>
@@ -201,19 +179,19 @@ export const Metrics = () => {
               Geographic distribution
             </h3>
             <div className="mt-6">
-              {topCountries.map((c) => (
+              {displayedCountries.map((c) => (
                 <BarRow key={c.label} {...c} />
               ))}
               <div className="border-t border-hairline" />
             </div>
           </div>
           <div>
-            <div className="label-eyebrow text-bronze mb-5">Audience · Languages</div>
+            <div className="label-eyebrow text-bronze mb-5">Audience · Breakdown</div>
             <h3 className="font-serif text-2xl md:text-3xl text-offwhite mb-2">
-              Language split
+              Gender split
             </h3>
             <div className="mt-6">
-              {languages.map((l) => (
+              {displayedAudienceBreakdown.map((l) => (
                 <BarRow key={l.label} {...l} />
               ))}
               <div className="border-t border-hairline" />
@@ -228,7 +206,7 @@ export const Metrics = () => {
               <h3 className="font-serif text-2xl md:text-3xl text-offwhite">Recent highlights</h3>
             </div>
             <span className="hidden md:block text-xs text-muted-foreground">
-              {isLive && liveUpdatedAt ? `Synced ${new Date(liveUpdatedAt).toLocaleDateString("it-IT")}` : "Updated regularly"}
+              Refreshed {new Date(updatedAt).toLocaleDateString("it-IT")}
             </span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
@@ -247,9 +225,16 @@ export const Metrics = () => {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-xs text-muted-foreground">
-            Sample content. Full analytics report available on request. Live sync prefers the Supabase Edge Function `instagram-metrics` and can optionally fall back to `VITE_SOCIAL_METRICS_URL`.
-          </p>
+          <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <p className="text-xs text-muted-foreground max-w-3xl">
+              Public estimate methodology: average likes, comments, and engagement rate are calculated from the latest {publicMetricsMethodology.sampledPostCount} public posts, excluding the most recent post. Audience geography and gender split are mirrored from the public media kit when available. The surfaced numbers reflect data exposed through Meta/Facebook APIs and are not manually overrideable on this website.
+            </p>
+            <Button asChild className="rounded-none uppercase tracking-[0.18em] text-[11px] px-6">
+              <a href={instagramProfile.mediaKitUrl} target="_blank" rel="noopener noreferrer">
+                Apri il media kit completo
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </section>

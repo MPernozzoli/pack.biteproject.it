@@ -14,11 +14,19 @@ export const navLinks = [
 export const instagramProfile = {
   handle: "godotconlat",
   url: "https://instagram.com/godotconlat",
+  mediaKitUrl: "https://njlk.it/godotconlat",
   supabaseFunctionName: "instagram-metrics",
-  metricsEndpoint: import.meta.env.VITE_SOCIAL_METRICS_URL?.trim() || "",
 };
 
-// TODO: Update `instagramProfile.handle` and `instagramProfile.url` as soon as the Instagram rename is finalized.
+// TODO: Update `instagramProfile.handle`, `instagramProfile.url`, and `instagramProfile.mediaKitUrl` as soon as the Instagram rename is finalized.
+
+export const publicMetricsMethodology = {
+  capturedAt: "2026-04-18",
+  sampledPostCount: 12,
+  excludesMostRecentPost: true,
+  refreshWindow: "24h",
+  sourceLabel: "Not Just Analytics public media kit",
+};
 
 export const overviewCards = [
   {
@@ -82,29 +90,27 @@ export const castingSubsections = [
 ];
 
 export const metrics = [
-  { label: "Instagram Followers", value: 24800, suffix: "" },
-  { label: "Avg. Reel Views", value: 38500, suffix: "" },
-  { label: "Avg. Likes / Post", value: 1850, suffix: "" },
-  { label: "Avg. Comments / Post", value: 96, suffix: "" },
-  { label: "Engagement Rate", value: 7.4, suffix: "%" },
-  { label: "Monthly Reach", value: 312000, suffix: "" },
+  { label: "Instagram Followers", value: 701, suffix: "" },
+  { label: "Avg. Reel Views", value: 1180, suffix: "" },
+  { label: "Avg. Likes / Post", value: 54, suffix: "" },
+  { label: "Avg. Comments / Post", value: 3, suffix: "" },
+  { label: "Engagement Rate", value: 8.3, suffix: "%" },
+  { label: "Posts Sampled", value: 12, suffix: "" },
 ];
 
 export const topCountries = [
-  { label: "Italy", value: 38 },
-  { label: "United States", value: 18 },
-  { label: "Germany", value: 9 },
-  { label: "United Kingdom", value: 7 },
-  { label: "France", value: 6 },
-  { label: "Other", value: 22 },
+  { label: "Italy", value: 62 },
+  { label: "United States", value: 7 },
+  { label: "Germany", value: 3 },
+  { label: "France", value: 2 },
+  { label: "United Kingdom", value: 2 },
+  { label: "Other", value: 24 },
 ];
 
 export const languages = [
-  { label: "Italian", value: 42 },
-  { label: "English", value: 39 },
-  { label: "German", value: 8 },
-  { label: "Spanish", value: 5 },
-  { label: "Other", value: 6 },
+  { label: "Female audience", value: 40 },
+  { label: "Male audience", value: 32 },
+  { label: "Undefined / not disclosed", value: 28 },
 ];
 
 export const partnerships = [
