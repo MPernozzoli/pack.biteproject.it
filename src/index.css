@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* PACK / BITE — Editorial dark portfolio design system. All colors HSL. */
+/* BITE's PACK — Editorial dark portfolio design system. All colors HSL. */
 
 @layer base {
   :root {

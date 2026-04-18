@@ -10,7 +10,6 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { useReveal } from "@/hooks/use-reveal";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { duoPhotos, freyjaPhotos, godotPhotos } from "@/data/photos";
 
 const formatNumber = (n: number) => {
   if (n >= 1000) return `${(n / 1000).toFixed(n % 1000 === 0 ? 0 : 1)}K`;
@@ -99,13 +98,6 @@ const BarRow = ({ label, value }: { label: string; value: number }) => (
   </div>
 );
 
-const topContent = [
-  duoPhotos.sunsetBoat,
-  godotPhotos.studioRed,
-  freyjaPhotos.redBackdropPortrait,
-  duoPhotos.countryside,
-];
-
 type MetricItem = {
   label: string;
   value: number;
@@ -163,7 +155,7 @@ export const Metrics = () => {
         <SectionHeader
           eyebrow="Metrics & audience"
           title="Performance, audience, and reach."
-          description={`A public-facing performance snapshot for @${instagramProfile.handle}, refreshed from ${publicMetricsMethodology.sourceLabel} at most once every ${publicMetricsMethodology.refreshWindow}. The published figures reflect data sourced from Meta/Facebook APIs via the public media kit and are not manually editable from this site.`}
+          description={`A public-facing performance snapshot for @${instagramProfile.handle}, refreshed at most once every ${publicMetricsMethodology.refreshWindow}. The published figures reflect data originating from Meta/Facebook APIs and are not manually editable from this site.`}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-12 border-r border-b border-hairline">
@@ -209,25 +201,12 @@ export const Metrics = () => {
               Refreshed {new Date(updatedAt).toLocaleDateString("it-IT")}
             </span>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-            {topContent.map((src, i) => (
-              <div key={i} className="relative aspect-[4/5] overflow-hidden group">
-                <img
-                  src={src}
-                  alt={`Top performing content ${i + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3 label-eyebrow text-offwhite/90">
-                  Reel · {Math.round(20 + Math.random() * 60)}K views
-                </div>
-              </div>
-            ))}
+          <div className="border border-hairline p-6 text-sm text-muted-foreground">
+            Recent highlights are available in the full public media kit. We do not mirror media cards here unless they are explicitly exposed in a stable public source.
           </div>
           <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <p className="text-xs text-muted-foreground max-w-3xl">
-              Public estimate methodology: average likes, comments, and engagement rate are calculated from the latest {publicMetricsMethodology.sampledPostCount} public posts, excluding the most recent post. Audience geography and gender split are mirrored from the public media kit when available. The surfaced numbers reflect data exposed through Meta/Facebook APIs and are not manually overrideable on this website.
+              Public estimate methodology: average likes, comments, and engagement rate are calculated from the latest {publicMetricsMethodology.sampledPostCount} public posts, excluding the most recent post. Audience geography and gender split reflect data originating from Meta/Facebook APIs. The surfaced numbers are not manually overrideable on this website.
             </p>
             <Button asChild className="rounded-none uppercase tracking-[0.18em] text-[11px] px-6">
               <a href={instagramProfile.mediaKitUrl} target="_blank" rel="noopener noreferrer">

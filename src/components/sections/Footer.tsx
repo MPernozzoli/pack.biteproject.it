@@ -6,8 +6,7 @@ export const Footer = () => (
       <div className="grid md:grid-cols-12 gap-10">
         <div className="md:col-span-5">
           <div className="flex items-center gap-2 mb-6">
-            <span className="font-serif text-2xl text-offwhite">PACK</span>
-            <span className="label-eyebrow text-bronze">/ BITE</span>
+            <span className="font-serif text-2xl text-offwhite">BITE&apos;s PACK</span>
           </div>
           <p className="font-serif text-2xl md:text-3xl text-offwhite/90 leading-tight max-w-md">
             Godot &amp; Freyja — talent for premium campaigns and casting.
@@ -38,8 +37,8 @@ export const Footer = () => (
       </div>
 
       <div className="mt-16 pt-6 border-t border-hairline flex flex-col md:flex-row justify-between gap-3 text-xs text-muted-foreground">
-        <span>© {new Date().getFullYear()} PACK / BITE Project. All rights reserved.</span>
-        <span>pack.biteproject.it</span>
+        <span>© {new Date().getFullYear()} BITE&apos;s PACK. All rights reserved.</span>
+        <span>biteproject.it</span>
       </div>
     </div>
   </footer>

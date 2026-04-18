@@ -55,7 +55,7 @@ const fallbackPayload = (mediaKitUrl: string): MetricsPayload => ({
   audienceBreakdown: [
     { label: "Female audience", value: 40 },
     { label: "Male audience", value: 32 },
-    { label: "Undefined / not disclosed", value: 28 },
+    { label: "Undefined / not disclosed", value: 27 },
   ],
   updatedAt: new Date().toISOString(),
   mediaKitUrl,
@@ -86,6 +86,28 @@ const json = (body: MetricsPayload, status = 200) =>
 
 const percent = (value: number, total: number) =>
   total > 0 ? Math.round((value / total) * 100) : 0;
+
+const toAudiencePercentages = (items: Array<{ label: string; count: number }>): AudienceItem[] => {
+  const total = items.reduce((sum, item) => sum + item.count, 0);
+  if (total <= 0) {
+    return items.map((item) => ({ label: item.label, value: 0 }));
+  }
+
+  const normalized = items.map((item) => ({
+    label: item.label,
+    value: percent(item.count, total),
+  }));
+
+  const sum = normalized.reduce((acc, item) => acc + item.value, 0);
+  const delta = 100 - sum;
+
+  if (delta !== 0) {
+    const last = normalized[normalized.length - 1];
+    last.value = Math.max(0, last.value + delta);
+  }
+
+  return normalized;
+};
 
 const matchNumber = (html: string, pattern: RegExp, label: string) => {
   const match = html.match(pattern);
@@ -131,11 +153,11 @@ const extractAudienceBreakdown = (html: string): AudienceItem[] => {
   const undefinedCount = Number(match[3]);
   const total = male + female + undefinedCount;
 
-  return [
-    { label: "Female audience", value: percent(female, total) },
-    { label: "Male audience", value: percent(male, total) },
-    { label: "Undefined / not disclosed", value: percent(undefinedCount, total) },
-  ];
+  return toAudiencePercentages([
+    { label: "Female audience", count: female },
+    { label: "Male audience", count: male },
+    { label: "Undefined / not disclosed", count: undefinedCount },
+  ]);
 };
 
 const parseNjaPayload = (html: string, mediaKitUrl: string): MetricsPayload => {

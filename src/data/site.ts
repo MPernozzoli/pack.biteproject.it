@@ -110,7 +110,7 @@ export const topCountries = [
 export const languages = [
   { label: "Female audience", value: 40 },
   { label: "Male audience", value: 32 },
-  { label: "Undefined / not disclosed", value: 28 },
+  { label: "Undefined / not disclosed", value: 27 },
 ];
 
 export const partnerships = [
