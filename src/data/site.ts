@@ -1,61 +1,277 @@
 import { duoPhotos, freyjaPhotos, godotPhotos } from "@/data/photos";
 
+export type SupportedLanguage = "it" | "en";
+
+const detectBrowserLanguage = (): SupportedLanguage => {
+  if (typeof navigator === "undefined") return "en";
+  const languages = [navigator.language, ...Array.from(navigator.languages ?? [])];
+  return languages.some((language) => language.toLowerCase().startsWith("it")) ? "it" : "en";
+};
+
+export const currentLanguage = detectBrowserLanguage();
+export const isItalian = currentLanguage === "it";
+
 export const navLinks = [
-  { id: "overview", label: "Overview" },
-  { id: "brands", label: "Brands" },
+  { id: "overview", label: isItalian ? "Overview" : "Overview" },
+  { id: "brands", label: isItalian ? "Brand" : "Brands" },
   { id: "casting", label: "Casting" },
-  { id: "profiles", label: "Profiles" },
-  { id: "metrics", label: "Metrics" },
-  { id: "work", label: "Work" },
-  { id: "gallery", label: "Gallery" },
-  { id: "contact", label: "Contact" },
+  { id: "profiles", label: isItalian ? "Profili" : "Profiles" },
+  { id: "metrics", label: isItalian ? "Metriche" : "Metrics" },
+  { id: "work", label: isItalian ? "Progetti" : "Work" },
+  { id: "gallery", label: isItalian ? "Galleria" : "Gallery" },
+  { id: "contact", label: isItalian ? "Contatti" : "Contact" },
 ];
 
 export const instagramProfile = {
-  handle: "godotconlat",
-  url: "https://instagram.com/godotconlat",
-  mediaKitUrl: "https://njlk.it/godotconlat",
+  handle: "bitespack",
+  url: "https://instagram.com/bitespack",
+  mediaKitUrl: "https://app.notjustanalytics.com/it/profiles/bitespack",
+  profileInfoUrl: "https://api.notjustanalytics.com/insights/ig/profile-info/bitespack",
   supabaseFunctionName: "instagram-metrics",
 };
 
 export const publicMetricsMethodology = {
   capturedAt: "2026-04-18",
-  sampledPostCount: 12,
-  excludesMostRecentPost: true,
+  sampledPostCount: 25,
+  excludesMostRecentPost: false,
   refreshWindow: "24h",
-  sourceLabel: "Not Just Analytics public media kit",
+  sourceLabel: "Not Just Analytics",
 };
+
+export const uiCopy = isItalian
+  ? {
+      navDescriptions: {
+        overview: "Chi sono, senza giri lunghi.",
+        brands: "Partnership, contenuti e formati.",
+        casting: "Temperamento, logistica e note da set.",
+        profiles: "Schede singole dei due cani.",
+        metrics: "Copertura e pubblico, in chiaro.",
+        work: "Idee, set e collaborazioni.",
+        gallery: "Scatti tra città, strada e mare.",
+        contact: "Linea diretta con l'handler.",
+      },
+      actions: {
+        contact: "Scrivici",
+        navigate: "Naviga",
+        mediaKit: "Apri media kit",
+        sendInquiry: "Invia richiesta",
+        sending: "Invio...",
+      },
+      hero: {
+        aria: "Storia di Godot e Freyja",
+        alt: "Godot e Freyja seduti insieme in studio",
+        intro: "Due nordici, una sola gestione. Godot porta calma e peso visivo, Freyja porta luce, ritmo e movimento.",
+        kitTitle: "Media kit social",
+        scroll: "Scroll",
+        stats: {
+          weight: "Peso",
+          height: "Altezza",
+          coat: "Manto",
+          set: "Set",
+          freyjaSet: "Studio · natura · movimento",
+          godotCoat: "Avorio chic",
+          godotSet: "Studio · nature · mountain",
+        },
+      },
+      sections: {
+        overviewEyebrow: "Il pack",
+        overviewTitle: "Due cani, una gestione sola.",
+        overviewBody:
+          "Godot è più fermo, Freyja più dinamica. Vivono gli stessi luoghi, viaggiano con la stessa persona e arrivano sul set con una routine già rodata.",
+        cardLabel: "Nota pack",
+        brandEyebrow: "Brand",
+        brandTitle: "Per brand che cercano presenza, non numeri da riempire.",
+        brandBody:
+          "Pet gear, travel, outdoor, hospitality: funziona quando il cane sembra davvero dentro la scena, non appoggiato lì per fare contenuto.",
+        castingEyebrow: "Casting",
+        castingTitle: "Per produzioni che hanno bisogno di calma quando parte il ciak.",
+        castingBody:
+          "Luci, microfoni, attese, reset. Entrambi conoscono le parti lente del set, quelle che fanno risparmiare tempo quando tutto intorno corre.",
+        profilesEyebrow: "Schede singole",
+        profilesTitle: "Due caratteri diversi. Stessa casa, stesso handler.",
+        profilesBody:
+          "Si possono lavorare separati o insieme. La parte utile, per chi produce, è che gestione, documenti e comunicazione restano in un unico punto.",
+        talentCard: "Scheda talent",
+        onSet: "Sul set",
+        commands: "Comandi",
+        environments: "Set",
+        handlerNote: "Nota handler",
+        duoEyebrow: "Scheda duo",
+        duoTitle: "Insieme riempiono la scena senza doverla forzare.",
+        duoBody:
+          "Un manto scalda l'immagine, l'altro la alleggerisce. Al guinzaglio e in barca hanno già un ritmo comune, quindi la camera può restare larga.",
+        duoBestFor: "Funzionano bene per",
+        metricsEyebrow: "Reach",
+        metricsTitle: "I numeri, senza trucco.",
+        metricsBody: `Snapshot pubblico di @${instagramProfile.handle}, aggiornato al massimo ogni ${publicMetricsMethodology.refreshWindow}. La fonte principale è ${publicMetricsMethodology.sourceLabel}.`,
+        audienceCountries: "Pubblico · paesi",
+        audienceCountriesTitle: "Da dove arrivano salvataggi e visualizzazioni",
+        audienceSplit: "Pubblico · split",
+        audienceSplitTitle: "Chi guarda",
+        highlights: "Highlights",
+        topPosts: "I post migliori restano nel kit",
+        metricsNote:
+          "Schede complete, salvataggi e note di watch-through restano nel profilo Not Just Analytics. Qui teniamo solo le metriche principali.",
+        metricsMethod:
+          "Metodo: medie sugli ultimi post pubblici disponibili; geografia e split seguono la reportistica Meta/NJA. Se lo scraping non risponde, resta visibile l'ultimo dato in cache.",
+      },
+      profileFields: {
+        sex: "Sesso",
+        born: "Anno di nascita",
+        weight: "Peso",
+        height: "Altezza",
+        coat: "Manto",
+        base: "Base",
+        passport: "Passaporto",
+        vaccinations: "Vaccinazioni",
+        temperament: "Temperamento",
+      },
+      contact: {
+        eyebrow: "Contatti",
+        title: "Parla con l'handler.",
+        body: "Casting deck, tariffe, location strane o date già fissate: scrivi qui. Niente inbox terze, niente passaggi inutili.",
+        whatsapp: "Scrivi al telefono di bordo",
+        based: "Italia · trasferte su richiesta",
+      },
+    }
+  : {
+      navDescriptions: {
+        overview: "Who they are, without the long pitch.",
+        brands: "Partnerships, content, and deliverables.",
+        casting: "Temperament, logistics, and set notes.",
+        profiles: "Individual talent cards.",
+        metrics: "Reach and audience, stated plainly.",
+        work: "Concepts, sets, and collaborations.",
+        gallery: "Stills from city walks, roads, and water.",
+        contact: "Direct line to the handler.",
+      },
+      actions: {
+        contact: "Get in touch",
+        navigate: "Navigate",
+        mediaKit: "Open media kit",
+        sendInquiry: "Send inquiry",
+        sending: "Sending...",
+      },
+      hero: {
+        aria: "Godot and Freyja story",
+        alt: "Godot and Freyja sitting together on a studio backdrop",
+        intro: "Two northern dogs, one handler. Godot brings stillness and visual weight; Freyja brings light, pace, and motion.",
+        kitTitle: "Social media kit",
+        scroll: "Scroll",
+        stats: {
+          weight: "Weight",
+          height: "Height",
+          coat: "Coat",
+          set: "Sets",
+          freyjaSet: "Studio · nature · motion",
+          godotCoat: "Chic ivory",
+          godotSet: "Studio · nature · mountain",
+        },
+      },
+      sections: {
+        overviewEyebrow: "The pack",
+        overviewTitle: "Two dogs, one steady setup.",
+        overviewBody:
+          "Godot is the still one, Freyja is the mover. They share the same places, the same handler, and a routine that is already built before call time.",
+        cardLabel: "Pack note",
+        brandEyebrow: "Brand lane",
+        brandTitle: "For brands that need presence, not filler.",
+        brandBody:
+          "Pet gear, travel, outdoor, hospitality: the work lands best when the dog feels genuinely inside the scene, not dropped in to make content.",
+        castingEyebrow: "Casting lane",
+        castingTitle: "For productions that need calm when the red light is on.",
+        castingBody:
+          "Lights, booms, waiting, resets. Both dogs know the slow parts of set life, which is usually where time is saved.",
+        profilesEyebrow: "Individual files",
+        profilesTitle: "Two different temperaments. Same household, same handler.",
+        profilesBody:
+          "Book them separately or together. Either way, handling, paperwork, and communication stay in one place.",
+        talentCard: "Talent card",
+        onSet: "On set",
+        commands: "Commands",
+        environments: "Sets",
+        handlerNote: "Handler note",
+        duoEyebrow: "Duo file",
+        duoTitle: "Together, they fill the frame without forcing it.",
+        duoBody:
+          "One coat warms the image, the other softens it. On leash and on deck they already share a rhythm, so the camera can stay wide.",
+        duoBestFor: "Best when the brief asks for",
+        metricsEyebrow: "Reach",
+        metricsTitle: "The numbers, without the spin.",
+        metricsBody: `Public snapshot for @${instagramProfile.handle}, refreshed at most once every ${publicMetricsMethodology.refreshWindow}. Primary source: ${publicMetricsMethodology.sourceLabel}.`,
+        audienceCountries: "Audience · countries",
+        audienceCountriesTitle: "Where saves and views come from",
+        audienceSplit: "Audience · split",
+        audienceSplitTitle: "Who watches",
+        highlights: "Highlights",
+        topPosts: "Top posts stay in the kit",
+        metricsNote:
+          "Full cards, saves, and watch-through notes stay in the Not Just Analytics profile. This page mirrors the headline metrics only.",
+        metricsMethod:
+          "Method: averages use the latest available public posts; geography and audience splits follow Meta/NJA reporting. If scraping fails, the last cached snapshot stays visible.",
+      },
+      profileFields: {
+        sex: "Sex",
+        born: "Year of birth",
+        weight: "Weight",
+        height: "Height",
+        coat: "Coat",
+        base: "Base location",
+        passport: "Passport",
+        vaccinations: "Vaccinations",
+        temperament: "Temperament",
+      },
+      contact: {
+        eyebrow: "Contact",
+        title: "Talk to the handler.",
+        body: "Casting decks, rate questions, odd locations, or dates already on the calendar: send them here. No third-party inbox, no pointless forwarding.",
+        whatsapp: "Message the boat phone",
+        based: "Italy · travel by arrangement",
+      },
+    };
 
 export const overviewCards = [
   {
     label: "01",
-    title: "Sponsored work",
-    body: "Reels and carousels where the product has to live in real rooms, real wind, and real tired dogs — not a rented loft with fake plants.",
+    title: isItalian ? "Contenuti sponsored" : "Sponsored work",
+    body: isItalian
+      ? "Reel e caroselli dove il prodotto sta in stanze vere, vento vero e cani veri, non in un loft affittato per sembrare spontaneo."
+      : "Reels and carousels where the product has to live in real rooms, real wind, and real dogs, not a rented loft pretending to be casual.",
   },
   {
     label: "02",
     title: "Casting & production",
-    body: "Call sheets that need two large animals to arrive vaccinated, insured, and unbothered by a boom swinging overhead.",
+    body: isItalian
+      ? "Per call sheet che hanno bisogno di due cani grandi, vaccinati, assicurati e abituati a un set che si muove intorno."
+      : "For call sheets that need two large dogs vaccinated, insured, and used to a set moving around them.",
   },
   {
     label: "03",
-    title: "Outdoor & boat life",
-    body: "Salt air, wet decks, long shadows on the pontoon. They have already clocked more miles on water than most talent ever will.",
+    title: isItalian ? "Outdoor e barca" : "Outdoor & boat life",
+    body: isItalian
+      ? "Aria salata, pontili, coperte bagnate, luce bassa. Sono ambienti che conoscono gia, non scenografie da scoprire il giorno dello shooting."
+      : "Salt air, wet decks, low light on the pontoon. These are places they already know, not sets they meet for the first time on shoot day.",
   },
   {
     label: "04",
-    title: "Solo or together",
-    body: "Godot for gravity, Freyja for motion — or both when the story needs contrast without doubling the crew.",
+    title: isItalian ? "Singoli o insieme" : "Solo or together",
+    body: isItalian
+      ? "Godot quando serve peso visivo, Freyja quando serve movimento. Insieme quando il contrasto deve essere naturale."
+      : "Godot when the frame needs weight, Freyja when it needs motion. Together when contrast should feel natural.",
   },
   {
     label: "05",
-    title: "One handler",
-    body: "No rotating strangers with treats in their pockets. One voice on set keeps cues clean and the dogs honest.",
+    title: isItalian ? "Un handler" : "One handler",
+    body: isItalian
+      ? "Niente passaggi di mano casuali. Una voce sola mantiene puliti i cue e piu leggibile il lavoro dei cani."
+      : "No random hand-offs. One voice on set keeps cues clean and the dogs easier to read.",
   },
   {
     label: "06",
-    title: "Europe-first travel",
-    body: "Italy as home port, EU paperwork sorted, flights and ferries discussed like adults — not improvised the night before.",
+    title: isItalian ? "Europa prima di tutto" : "Europe-first travel",
+    body: isItalian
+      ? "Italia come base, documenti UE pronti, trasferte valutate prima. Non si improvvisa la sera prima."
+      : "Italy as the base, EU paperwork ready, travel discussed early. No last-minute improvising.",
   },
 ];
 
@@ -98,12 +314,12 @@ export const castingSubsections = [
 ];
 
 export const metrics = [
-  { label: "Instagram followers", value: 701, suffix: "" },
-  { label: "Avg. reel views", value: 1180, suffix: "" },
-  { label: "Avg. likes / post", value: 54, suffix: "" },
-  { label: "Avg. comments / post", value: 3, suffix: "" },
-  { label: "Engagement rate", value: 8.3, suffix: "%" },
-  { label: "Posts sampled", value: 12, suffix: "" },
+  { label: isItalian ? "Follower Instagram" : "Instagram followers", value: 863, suffix: "" },
+  { label: "Engagement rate", value: 12.16, suffix: "%" },
+  { label: isItalian ? "Like medi / post" : "Avg. likes / post", value: 74, suffix: "" },
+  { label: isItalian ? "Commenti medi / post" : "Avg. comments / post", value: 6, suffix: "" },
+  { label: isItalian ? "Post analizzati" : "Posts sampled", value: 25, suffix: "" },
+  { label: isItalian ? "Post totali" : "Total posts", value: 91, suffix: "" },
 ];
 
 export const topCountries = [
@@ -116,9 +332,9 @@ export const topCountries = [
 ];
 
 export const languages = [
-  { label: "Female audience", value: 40 },
-  { label: "Male audience", value: 32 },
-  { label: "Undefined / not disclosed", value: 27 },
+  { label: isItalian ? "Pubblico femminile" : "Female audience", value: 40 },
+  { label: isItalian ? "Pubblico maschile" : "Male audience", value: 32 },
+  { label: isItalian ? "Non indicato" : "Undefined / not disclosed", value: 27 },
 ];
 
 export const partnerships = [
@@ -204,16 +420,16 @@ export const galleryCategories = [
 ] as const;
 
 export const services = [
-  { title: "Sponsored reels", body: "Concept through colour grade — vertical first, sound designed for phones, not cinema speakers." },
-  { title: "Story arcs", body: "Serialized stories with a beginning and an end, instead of five random frames and a sticker." },
-  { title: "Carousels", body: "Editorial pacing for people who still swipe slowly and read captions." },
-  { title: "UGC packs", body: "Looser cuts meant for brand-owned channels — handheld, honest, slightly imperfect on purpose." },
-  { title: "Product in scene", body: "Gear shown where it actually gets used: salt, mud, hotel carpet, boat fibreglass." },
-  { title: "Campaign days", body: "Full-day shoots with one handler, scheduled breaks, and a shot list that respects thick coats in heat." },
-  { title: "Still modelling", body: "Editorial and commercial stills with marks that make sense for dogs who do not do ballet." },
-  { title: "Duo days", body: "Two dogs, one schedule — built for wardrobe changes and light that has to turn together." },
-  { title: "Travel & boat", body: "Location work on docks, decks, and roads — logistics discussed before anyone packs a drone." },
-  { title: "Custom retainers", body: "Longer arcs for brands that want season-long coherence instead of one-off posts." },
+  { title: isItalian ? "Reel sponsored" : "Sponsored reels", body: isItalian ? "Dal concept al montaggio: vertical first, audio pensato per telefono, ritmo senza effetto spot finto." : "From concept to grade: vertical first, sound built for phones, and pacing that does not feel like a fake ad." },
+  { title: isItalian ? "Story arc" : "Story arcs", body: isItalian ? "Sequenze con un inizio e una chiusura, non cinque frame casuali e uno sticker." : "Sequences with a beginning and an end, not five random frames and a sticker." },
+  { title: "Carousels", body: isItalian ? "Pacing editoriale per chi guarda con calma e legge ancora le caption." : "Editorial pacing for people who still swipe slowly and read captions." },
+  { title: "UGC packs", body: isItalian ? "Cut piu sciolti per canali brand-owned: mano libera, tono onesto, imperfezioni controllate." : "Looser cuts for brand-owned channels: handheld, honest, and intentionally a little imperfect." },
+  { title: isItalian ? "Prodotto in scena" : "Product in scene", body: isItalian ? "Gear mostrato dove viene usato davvero: sale, fango, moquette d'hotel, vetroresina di barca." : "Gear shown where it actually gets used: salt, mud, hotel carpet, boat fibreglass." },
+  { title: isItalian ? "Giornate campagna" : "Campaign days", body: isItalian ? "Shooting full-day con un handler, pause in scaletta e shot list compatibile con manti importanti." : "Full-day shoots with one handler, scheduled breaks, and a shot list that respects heavy coats." },
+  { title: isItalian ? "Still modelling" : "Still modelling", body: isItalian ? "Stills editoriali e commerciali con mark sensati per cani veri, non per pose impossibili." : "Editorial and commercial stills with marks that make sense for real dogs, not impossible poses." },
+  { title: isItalian ? "Duo days" : "Duo days", body: isItalian ? "Due cani, una timeline: utile quando luce, styling e gestione devono muoversi insieme." : "Two dogs, one timeline, useful when light, styling, and handling need to move together." },
+  { title: isItalian ? "Travel e barca" : "Travel & boat", body: isItalian ? "Location su pontili, deck e strade, con logistica chiara prima che qualcuno prepari il drone." : "Location work on docks, decks, and roads, with logistics clear before anyone packs a drone." },
+  { title: isItalian ? "Retainer custom" : "Custom retainers", body: isItalian ? "Architetture piu lunghe per brand che vogliono coerenza di stagione, non un post isolato." : "Longer arcs for brands that want season-long coherence instead of one-off posts." },
 ];
 
 export const whyPoints = [

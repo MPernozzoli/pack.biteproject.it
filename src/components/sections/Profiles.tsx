@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { profiles, type DogProfile } from "@/data/profiles";
+import { uiCopy } from "@/data/site";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useReveal } from "@/hooks/use-reveal";
 import { cn } from "@/lib/utils";
@@ -33,7 +34,7 @@ const ProfilePanel = ({ p }: { p: DogProfile }) => {
           </div>
         </div>
         <div className="mt-6">
-          <div className="label-eyebrow mb-2 text-bronze">Talent card</div>
+          <div className="label-eyebrow mb-2 text-bronze">{uiCopy.sections.talentCard}</div>
           <h3 className="font-serif text-5xl leading-none tracking-tight text-cream md:text-6xl">
             {p.name}
           </h3>
@@ -42,18 +43,18 @@ const ProfilePanel = ({ p }: { p: DogProfile }) => {
       </div>
 
       <div className="glass-panel-soft rounded-[28px] p-6 md:p-8 lg:col-span-7">
-        <Field label="Sex" value={p.sex} />
-        <Field label="Year of birth" value={p.born} />
-        <Field label="Weight" value={p.weight} />
-        <Field label="Height" value={p.height} />
-        <Field label="Coat" value={p.coat} />
-        <Field label="Base location" value={p.base} />
-        <Field label="Passport" value={p.passport} />
-        <Field label="Vaccinations" value={p.vaccinations} />
-        <Field label="Temperament" value={p.temperament} />
+        <Field label={uiCopy.profileFields.sex} value={p.sex} />
+        <Field label={uiCopy.profileFields.born} value={p.born} />
+        <Field label={uiCopy.profileFields.weight} value={p.weight} />
+        <Field label={uiCopy.profileFields.height} value={p.height} />
+        <Field label={uiCopy.profileFields.coat} value={p.coat} />
+        <Field label={uiCopy.profileFields.base} value={p.base} />
+        <Field label={uiCopy.profileFields.passport} value={p.passport} />
+        <Field label={uiCopy.profileFields.vaccinations} value={p.vaccinations} />
+        <Field label={uiCopy.profileFields.temperament} value={p.temperament} />
 
         <div className="mt-8 border-t border-cream/10 pt-8">
-          <div className="label-eyebrow mb-4">On set</div>
+          <div className="label-eyebrow mb-4">{uiCopy.sections.onSet}</div>
           <ul className="space-y-3">
             {p.strengths.map((s) => (
               <li key={s} className="flex gap-3 font-sans text-sm leading-relaxed text-cream/88">
@@ -65,7 +66,7 @@ const ProfilePanel = ({ p }: { p: DogProfile }) => {
         </div>
 
         <div className="mt-8 border-t border-cream/10 pt-8">
-          <div className="label-eyebrow mb-4">Commands</div>
+          <div className="label-eyebrow mb-4">{uiCopy.sections.commands}</div>
           <div className="flex flex-wrap gap-2">
             {p.commands.map((c) => (
               <span
@@ -79,7 +80,7 @@ const ProfilePanel = ({ p }: { p: DogProfile }) => {
         </div>
 
         <div className="mt-8 border-t border-cream/10 pt-8">
-          <div className="label-eyebrow mb-4">Environments</div>
+          <div className="label-eyebrow mb-4">{uiCopy.sections.environments}</div>
           <div className="flex flex-wrap gap-2">
             {p.environments.map((e) => (
               <span
@@ -93,7 +94,7 @@ const ProfilePanel = ({ p }: { p: DogProfile }) => {
         </div>
 
         <div className="mt-8 border-t border-cream/10 pt-8">
-          <div className="label-eyebrow mb-3">Handler note</div>
+          <div className="label-eyebrow mb-3">{uiCopy.sections.handlerNote}</div>
           <p className="font-sans text-sm leading-relaxed text-muted-foreground">{p.handlerNotes}</p>
         </div>
       </div>
@@ -107,9 +108,9 @@ export const Profiles = () => {
     <section id="profiles" className="page-section pt-8 md:pt-10">
       <div className="container-editorial">
         <SectionHeader
-          eyebrow="Individual files"
-          title="Two distinct talents. Same household, same handler."
-          description="Book them apart when the story needs a single silhouette, or together when contrast is the point. Either way, the paperwork stays in one place."
+          eyebrow={uiCopy.sections.profilesEyebrow}
+          title={uiCopy.sections.profilesTitle}
+          description={uiCopy.sections.profilesBody}
         />
         <Tabs value={tab} onValueChange={(v) => setTab(v as "godot" | "freyja")} className="mt-12">
           <TabsList className="mb-2 flex h-auto w-full flex-wrap justify-start gap-2 rounded-2xl border border-cream/10 bg-cream/[0.04] p-2">

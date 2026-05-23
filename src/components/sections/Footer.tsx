@@ -1,5 +1,5 @@
 import { Instagram, Mail } from "lucide-react";
-import { instagramProfile, navLinks } from "@/data/site";
+import { instagramProfile, isItalian, navLinks } from "@/data/site";
 
 const MessageIcon = ({ size = 16, className }: { size?: number; className?: string }) => (
   <svg
@@ -32,7 +32,9 @@ export const Footer = () => (
               Godot &amp; Freyja
             </h3>
             <p className="font-serif text-lg italic leading-relaxed text-cream/75 md:text-xl">
-              A working pack from BITE — two dogs, one handler, paperwork that stays current.
+              {isItalian
+                ? "Un pack operativo di BITE: due cani, un handler, documenti sempre aggiornati."
+                : "A working pack from BITE — two dogs, one handler, paperwork that stays current."}
             </p>
           </div>
 

@@ -5,6 +5,8 @@ import {
   metrics as fallbackMetrics,
   publicMetricsMethodology,
   topCountries,
+  currentLanguage,
+  uiCopy,
 } from "@/data/site";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useReveal } from "@/hooks/use-reveal";
@@ -132,7 +134,14 @@ export const Metrics = () => {
       try {
         const { data, error } = await supabase.functions.invoke<SocialMetricsResponse>(
           instagramProfile.supabaseFunctionName,
-          { body: { slug: instagramProfile.handle, mediaKitUrl: instagramProfile.mediaKitUrl } },
+          {
+            body: {
+              slug: instagramProfile.handle,
+              mediaKitUrl: instagramProfile.mediaKitUrl,
+              profileInfoUrl: instagramProfile.profileInfoUrl,
+              language: currentLanguage,
+            },
+          },
         );
 
         if (error) throw error;
@@ -157,9 +166,9 @@ export const Metrics = () => {
       <div className="container-editorial">
         <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
           <SectionHeader
-            eyebrow="Reach"
-            title="What the numbers actually say."
-            description={`Public snapshot for @${instagramProfile.handle}, refreshed at most once every ${publicMetricsMethodology.refreshWindow}. Figures come from Meta APIs via ${publicMetricsMethodology.sourceLabel} — not edited by hand on this page.`}
+            eyebrow={uiCopy.sections.metricsEyebrow}
+            title={uiCopy.sections.metricsTitle}
+            description={uiCopy.sections.metricsBody}
           />
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -170,8 +179,8 @@ export const Metrics = () => {
 
           <div className="mt-14 grid gap-10 lg:grid-cols-2 lg:gap-16">
             <div className="glass-panel-soft rounded-[28px] p-6 md:p-8">
-              <div className="label-eyebrow mb-3 text-bronze">Audience · countries</div>
-              <h3 className="mb-2 font-serif text-2xl text-cream md:text-3xl">Where the saves come from</h3>
+              <div className="label-eyebrow mb-3 text-bronze">{uiCopy.sections.audienceCountries}</div>
+              <h3 className="mb-2 font-serif text-2xl text-cream md:text-3xl">{uiCopy.sections.audienceCountriesTitle}</h3>
               <div className="mt-6">
                 {displayedCountries.map((c) => (
                   <BarRow key={c.label} {...c} />
@@ -179,8 +188,8 @@ export const Metrics = () => {
               </div>
             </div>
             <div className="glass-panel-soft rounded-[28px] p-6 md:p-8">
-              <div className="label-eyebrow mb-3 text-bronze">Audience · split</div>
-              <h3 className="mb-2 font-serif text-2xl text-cream md:text-3xl">Who watches</h3>
+              <div className="label-eyebrow mb-3 text-bronze">{uiCopy.sections.audienceSplit}</div>
+              <h3 className="mb-2 font-serif text-2xl text-cream md:text-3xl">{uiCopy.sections.audienceSplitTitle}</h3>
               <div className="mt-6">
                 {displayedAudienceBreakdown.map((l) => (
                   <BarRow key={l.label} {...l} />
@@ -192,29 +201,26 @@ export const Metrics = () => {
           <div className="mt-14">
             <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="label-eyebrow mb-2 text-bronze">Highlights</div>
-                <h3 className="font-serif text-2xl text-cream md:text-3xl">Top posts live in the kit</h3>
+                <div className="label-eyebrow mb-2 text-bronze">{uiCopy.sections.highlights}</div>
+                <h3 className="font-serif text-2xl text-cream md:text-3xl">{uiCopy.sections.topPosts}</h3>
               </div>
               <span className="hidden font-sans text-xs text-muted-foreground md:block">
                 Updated {new Date(updatedAt).toLocaleDateString("en-GB")}
               </span>
             </div>
             <div className="glass-panel-soft rounded-[28px] p-6 font-sans text-sm leading-relaxed text-muted-foreground md:p-8">
-              Full cards, saves, and watch-through notes stay in the public media kit — this page
-              only mirrors the headline metrics so nothing drifts out of date here.
+              {uiCopy.sections.metricsNote}
             </div>
             <div className="mt-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <p className="max-w-3xl font-sans text-xs leading-relaxed text-muted-foreground">
-                Method: averages use the latest {publicMetricsMethodology.sampledPostCount} public posts,
-                excluding the most recent. Geography and gender splits follow Meta reporting. Nothing
-                below can be manually overridden from this site.
+                {uiCopy.sections.metricsMethod}
               </p>
               <Button
                 asChild
                 className="h-12 rounded-full border border-cream/15 bg-cream/[0.08] px-6 font-sans text-[11px] font-semibold uppercase tracking-[0.18em] text-cream hover:bg-cream/[0.12]"
               >
                 <a href={instagramProfile.mediaKitUrl} target="_blank" rel="noopener noreferrer">
-                  Open full media kit
+                  {uiCopy.actions.mediaKit}
                 </a>
               </Button>
             </div>

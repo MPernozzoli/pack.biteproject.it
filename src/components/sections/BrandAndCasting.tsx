@@ -1,5 +1,5 @@
 import { SectionHeader } from "@/components/SectionHeader";
-import { brandSubsections, castingSubsections } from "@/data/site";
+import { brandSubsections, castingSubsections, uiCopy } from "@/data/site";
 import { useReveal } from "@/hooks/use-reveal";
 
 interface Sub {
@@ -35,9 +35,9 @@ export const BrandKit = () => (
     <div className="container-editorial">
       <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
         <SectionHeader
-          eyebrow="Brand lane"
-          title="For brands that want presence without performance."
-          description="Pet gear, travel, outdoor, hospitality — anywhere a large dog can carry the frame without stealing it. The work stays grounded in how they actually live."
+          eyebrow={uiCopy.sections.brandEyebrow}
+          title={uiCopy.sections.brandTitle}
+          description={uiCopy.sections.brandBody}
         />
         <SubGrid items={brandSubsections} />
       </div>
@@ -50,9 +50,9 @@ export const CastingProfile = () => (
     <div className="container-editorial">
       <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
         <SectionHeader
-          eyebrow="Casting lane"
-          title="For productions that need calm when the red light is on."
-          description="Lights, booms, long holds — both dogs have been walked through the boring parts of set life until it feels routine, not theatrical."
+          eyebrow={uiCopy.sections.castingEyebrow}
+          title={uiCopy.sections.castingTitle}
+          description={uiCopy.sections.castingBody}
         />
         <SubGrid items={castingSubsections} />
       </div>

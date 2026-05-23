@@ -39,6 +39,8 @@ export const freyjaPhotos = {
 } as const;
 
 export const duoPhotos = {
+  studioExtended: "/photos/home/godot-freyja-studio-wide.png",
+  gardenRoses: "/photos/home/godot-freyja-roses.jpeg",
   eventPoster: "/photos/both/b_4zampeinfiera.webp",
   studioWide: "/photos/both/b_casting.webp",
   studioTight: "/photos/both/b_casting2.webp",

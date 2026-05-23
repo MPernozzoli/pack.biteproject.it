@@ -1,29 +1,28 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
-import { navLinks } from "@/data/site";
+import { navLinks, uiCopy } from "@/data/site";
 import { cn } from "@/lib/utils";
-
-const linkDescriptions: Record<string, string> = {
-  overview: "Who they are, at a glance.",
-  brands: "Partnerships, content, and deliverables.",
-  casting: "Temperament, logistics, and set notes.",
-  profiles: "Individual talent cards.",
-  metrics: "Reach and audience, plainly stated.",
-  work: "Concepts and recent collaborations.",
-  gallery: "Stills from life on the road and water.",
-  contact: "Direct line to the handler.",
-};
 
 export const Nav = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [heroComplete, setHeroComplete] = useState(false);
   const [open, setOpen] = useState(false);
   const [logoHovered, setLogoHovered] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      const hero = document.getElementById("top");
+      const heroExit = hero ? hero.offsetTop + hero.offsetHeight - window.innerHeight : 0;
+      setScrolled(window.scrollY > 24);
+      setHeroComplete(!hero || window.scrollY >= heroExit - 8);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -38,6 +37,9 @@ export const Nav = () => {
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 px-4 pt-3 transition-all duration-500 md:px-6 md:pt-4",
+        heroComplete || open
+          ? "translate-y-0 opacity-100"
+          : "pointer-events-none -translate-y-5 opacity-0",
       )}
     >
       <div
@@ -108,7 +110,7 @@ export const Nav = () => {
             href="#contact"
             className="glass-button inline-flex h-10 items-center justify-center gap-2 px-6 py-0"
           >
-            Get in touch
+            {uiCopy.actions.contact}
             <ArrowRight size={14} className="opacity-90" />
           </a>
         </div>
@@ -144,7 +146,7 @@ export const Nav = () => {
             <div className="mb-4 flex items-center justify-between">
               <span className="glass-chip-bronze inline-flex items-center gap-2 px-3 py-1.5 text-[10px] font-sans uppercase tracking-[0.24em] text-cream">
                 <span className="h-1.5 w-1.5 rounded-full bg-cream/90" />
-                Navigate
+                {uiCopy.actions.navigate}
               </span>
             </div>
             <nav className="flex flex-col gap-2">
@@ -161,7 +163,7 @@ export const Nav = () => {
                   <div className="min-w-0 text-left">
                     <p className="font-serif text-xl leading-none text-cream">{link.label}</p>
                     <p className="mt-2 max-w-[16rem] font-sans text-xs leading-relaxed text-muted-foreground">
-                      {linkDescriptions[link.id] ?? ""}
+                      {uiCopy.navDescriptions[link.id as keyof typeof uiCopy.navDescriptions] ?? ""}
                     </p>
                   </div>
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-cream/15 bg-cream/[0.06] text-cream/85 transition-transform duration-300 group-hover:translate-x-0.5">
@@ -175,7 +177,7 @@ export const Nav = () => {
               onClick={() => setOpen(false)}
               className="glass-button mt-5 flex h-12 w-full items-center justify-center gap-2"
             >
-              Get in touch
+              {uiCopy.actions.contact}
               <ArrowRight size={16} />
             </a>
           </div>

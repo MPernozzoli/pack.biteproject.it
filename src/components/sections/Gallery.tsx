@@ -1,8 +1,26 @@
 import { useCallback, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { galleryItems, galleryCategories } from "@/data/site";
+import { galleryItems, galleryCategories, isItalian } from "@/data/site";
 import { SectionHeader } from "@/components/SectionHeader";
 import { cn } from "@/lib/utils";
+
+const categoryLabel = (category: string) => {
+  if (!isItalian) return category;
+  const labels: Record<string, string> = {
+    All: "Tutte",
+    Portraits: "Ritratti",
+    Studio: "Studio",
+    Lifestyle: "Lifestyle",
+    Outdoor: "Outdoor",
+    Boat: "Barca",
+    Water: "Acqua",
+    Duo: "Duo",
+    City: "Citta",
+    Seasonal: "Stagionali",
+    Events: "Eventi",
+  };
+  return labels[category] ?? category;
+};
 
 export const Gallery = () => {
   const [filter, setFilter] = useState<(typeof galleryCategories)[number]>("All");
@@ -36,9 +54,13 @@ export const Gallery = () => {
       <div className="container-editorial">
         <div className="glass-panel rounded-[38px] p-8 md:p-12 lg:p-14">
           <SectionHeader
-            eyebrow="Gallery"
-            title="A running stills file — not a greatest-hits reel."
-            description="Portraits, boat days, city nights. Tap any frame to view it clean; filters only hide what you do not need on this pass."
+            eyebrow={isItalian ? "Galleria" : "Gallery"}
+            title={isItalian ? "Uno stills file vivo, non una raccolta patinata." : "A running stills file, not a greatest-hits reel."}
+            description={
+              isItalian
+                ? "Ritratti, barca, città, acqua. Apri ogni frame pulito; i filtri servono solo a togliere quello che non ti serve ora."
+                : "Portraits, boat days, city nights. Tap any frame to view it clean; filters only hide what you do not need on this pass."
+            }
           />
 
           <div className="mt-10 mb-10 flex flex-wrap gap-2">
@@ -54,7 +76,7 @@ export const Gallery = () => {
                     : "border-cream/12 bg-cream/[0.05] text-muted-foreground hover:border-bronze/30 hover:text-cream",
                 )}
               >
-                {c}
+                {categoryLabel(c)}
               </button>
             ))}
           </div>
@@ -94,14 +116,14 @@ export const Gallery = () => {
           className="fixed inset-0 z-[100] flex items-center justify-center bg-background/95 p-4 backdrop-blur-2xl animate-in fade-in duration-200 md:p-10"
           role="dialog"
           aria-modal="true"
-          aria-label="Image preview"
+          aria-label={isItalian ? "Anteprima immagine" : "Image preview"}
           onClick={() => setLightbox(null)}
         >
           <button
             type="button"
             onClick={() => setLightbox(null)}
             className="glass-chip absolute right-4 top-4 z-[110] inline-flex h-11 w-11 items-center justify-center rounded-full text-cream transition-colors hover:bg-cream/10 md:right-8 md:top-8"
-            aria-label="Close"
+            aria-label={isItalian ? "Chiudi" : "Close"}
           >
             <X size={22} />
           </button>
@@ -114,7 +136,7 @@ export const Gallery = () => {
                   goPrev();
                 }}
                 className="glass-chip absolute left-2 top-1/2 z-[110] inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-cream md:left-6"
-                aria-label="Previous image"
+                aria-label={isItalian ? "Immagine precedente" : "Previous image"}
               >
                 <ChevronLeft size={22} />
               </button>
@@ -125,7 +147,7 @@ export const Gallery = () => {
                   goNext();
                 }}
                 className="glass-chip absolute right-2 top-1/2 z-[110] inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-cream md:right-6"
-                aria-label="Next image"
+                aria-label={isItalian ? "Immagine successiva" : "Next image"}
               >
                 <ChevronRight size={22} />
               </button>
@@ -141,7 +163,7 @@ export const Gallery = () => {
               className="max-h-[min(82vh,860px)] w-auto max-w-full rounded-[22px] object-contain"
             />
             <p className="mt-3 text-center font-sans text-xs text-muted-foreground">
-              {lightbox + 1} / {filtered.length} · {filtered[lightbox].category}
+              {lightbox + 1} / {filtered.length} · {categoryLabel(filtered[lightbox].category)}
             </p>
           </div>
         </div>

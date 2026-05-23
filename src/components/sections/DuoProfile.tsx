@@ -1,14 +1,10 @@
 import { useReveal } from "@/hooks/use-reveal";
 import { duoPhotos } from "@/data/photos";
+import { isItalian, uiCopy } from "@/data/site";
 
-const tags = [
-  "Campaign stills",
-  "Outdoor & boat",
-  "Family travel",
-  "Premium pet goods",
-  "Editorial",
-  "Long-form narrative",
-];
+const tags = isItalian
+  ? ["Stills campagna", "Outdoor e barca", "Family travel", "Pet goods premium", "Editoriale", "Narrativa lunga"]
+  : ["Campaign stills", "Outdoor & boat", "Family travel", "Premium pet goods", "Editorial", "Long-form narrative"];
 
 export const DuoProfile = () => {
   const ref = useReveal<HTMLDivElement>();
@@ -23,17 +19,16 @@ export const DuoProfile = () => {
             <div className="glass-panel-soft rounded-[32px] p-8 md:p-10">
               <span className="glass-chip-bronze mb-5 inline-flex items-center gap-2 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.26em] text-cream">
                 <span className="h-1.5 w-1.5 rounded-full bg-charcoal/70" />
-                Duo file
+                {uiCopy.sections.duoEyebrow}
               </span>
               <h2 className="font-serif text-4xl leading-[1.05] tracking-tight text-cream md:text-5xl lg:text-6xl">
-                Together, the frame stops begging for a gimmick.
+                {uiCopy.sections.duoTitle}
               </h2>
               <p className="mt-6 font-sans text-base leading-relaxed text-muted-foreground md:text-lg">
-                One coat reads firelight; the other reads fog. They share a rhythm on leash and on
-                deck, so the camera can stay wide and let the space do the talking.
+                {uiCopy.sections.duoBody}
               </p>
 
-              <div className="label-eyebrow mb-4 mt-10 text-bronze">Best when the brief asks for</div>
+              <div className="label-eyebrow mb-4 mt-10 text-bronze">{uiCopy.sections.duoBestFor}</div>
               <div className="flex flex-wrap gap-2">
                 {tags.map((t) => (
                   <span

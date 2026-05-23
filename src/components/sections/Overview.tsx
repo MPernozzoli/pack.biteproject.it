@@ -1,5 +1,5 @@
 import { useReveal } from "@/hooks/use-reveal";
-import { overviewCards } from "@/data/site";
+import { overviewCards, uiCopy } from "@/data/site";
 
 export const Overview = () => {
   return (
@@ -10,17 +10,15 @@ export const Overview = () => {
             <div className="lg:col-span-5">
               <span className="glass-chip-bronze mb-5 inline-flex items-center gap-2 px-4 py-2 text-[10px] font-sans font-medium uppercase tracking-[0.26em] text-cream">
                 <span className="h-1.5 w-1.5 rounded-full bg-charcoal/70" />
-                The pack
+                {uiCopy.sections.overviewEyebrow}
               </span>
               <h2 className="font-serif text-4xl leading-[1.05] tracking-tight text-cream md:text-5xl">
-                Two dogs, <span className="italic text-bronze">one</span> working file.
+                {uiCopy.sections.overviewTitle}
               </h2>
             </div>
             <div className="flex items-end lg:col-span-6 lg:col-start-7">
               <p className="font-sans text-base leading-relaxed text-muted-foreground md:text-lg">
-                Godot carries stillness; Freyja carries motion. Same boat, same city walks, same
-                handler — which means production gets continuity instead of a patchwork of
-                strangers holding leashes.
+                {uiCopy.sections.overviewBody}
               </p>
             </div>
           </div>
@@ -55,7 +53,7 @@ const OverviewCard = ({
       style={{ transitionDelay: `${index * 70}ms` }}
     >
       <div className="font-serif text-3xl text-bronze/90 md:text-4xl">{label}</div>
-      <div className="label-eyebrow mb-4 mt-6 text-bronze">Pack note</div>
+      <div className="label-eyebrow mb-4 mt-6 text-bronze">{uiCopy.sections.cardLabel}</div>
       <h3 className="mb-3 font-serif text-2xl leading-tight text-cream">{title}</h3>
       <p className="font-sans text-sm leading-relaxed text-muted-foreground">{body}</p>
     </div>
